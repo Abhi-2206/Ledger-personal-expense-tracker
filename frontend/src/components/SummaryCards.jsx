@@ -1,24 +1,44 @@
 import React from 'react';
 
-function SummaryCards() {
+function SummaryCards({ transactions }) {
+  const calculateSummary = () => {
+    const income = transactions
+      .filter(t => t.amount > 0)
+      .reduce((sum, t) => sum + t.amount, 0);
+
+    const expenses = transactions
+      .filter(t => t.amount < 0)
+      .reduce((sum, t) => sum + Math.abs(t.amount), 0);
+
+    const balance = income - expenses;
+
+    return {
+      balance: balance.toFixed(2),
+      income: income.toFixed(2),
+      expenses: expenses.toFixed(2),
+    };
+  };
+
+  const summary = calculateSummary();
+
   const cards = [
     {
       title: 'Total Balance',
-      value: '$12,450.00',
+      value: `$${summary.balance}`,
       icon: '💳',
       color: '#3b82f6',
       bgColor: '#eff6ff',
     },
     {
       title: 'Income',
-      value: '$8,250.00',
+      value: `$${summary.income}`,
       icon: '📈',
       color: '#10b981',
       bgColor: '#ecfdf5',
     },
     {
       title: 'Expenses',
-      value: '$4,200.00',
+      value: `$${summary.expenses}`,
       icon: '📉',
       color: '#ef4444',
       bgColor: '#fef2f2',

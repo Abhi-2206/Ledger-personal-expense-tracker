@@ -1,6 +1,10 @@
 const path = require('path');
+const transactionManager = require('./transactionManager');
+
 const electron = require('electron');
-const { app, BrowserWindow } = electron;
+const app = electron.app;
+const BrowserWindow = electron.BrowserWindow;
+const ipcMain = electron.ipcMain;
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -25,4 +29,21 @@ function createWindow() {
 
 app.whenReady().then(() => {
   createWindow();
+});
+
+// IPC handlers for transaction operations
+ipcMain.handle('get-transactions', () => {
+  return transactionManager.getAllTransactions();
+});
+
+ipcMain.handle('add-transaction', (event, transaction) => {
+  return transactionManager.addTransaction(transaction);
+});
+
+ipcMain.handle('update-transaction', (event, id, transaction) => {
+  return transactionManager.updateTransaction(id, transaction);
+});
+
+ipcMain.handle('delete-transaction', (event, id) => {
+  return transactionManager.deleteTransaction(id);
 });

@@ -1,19 +1,6 @@
 import React from 'react';
 
-function TransactionsTable() {
-  const transactions = [
-    { id: 1, description: 'Grocery Store', category: 'Food', date: '2026-10-22', amount: -85.50 },
-    { id: 2, description: 'Salary Deposit', category: 'Income', date: '2026-10-21', amount: 4500.00 },
-    { id: 3, description: 'Electric Bill', category: 'Utilities', date: '2026-10-20', amount: -120.00 },
-    { id: 4, description: 'Coffee Shop', category: 'Food', date: '2026-10-20', amount: -15.75 },
-    { id: 5, description: 'Netflix Subscription', category: 'Entertainment', date: '2026-10-19', amount: -15.99 },
-    { id: 6, description: 'Gas Station', category: 'Transport', date: '2026-10-18', amount: -45.00 },
-    { id: 7, description: 'Freelance Payment', category: 'Income', date: '2026-10-17', amount: 750.00 },
-    { id: 8, description: 'Restaurant', category: 'Food', date: '2026-10-16', amount: -62.30 },
-    { id: 9, description: 'Internet Bill', category: 'Utilities', date: '2026-10-15', amount: -79.99 },
-    { id: 10, description: 'Pharmacy', category: 'Health', date: '2026-10-14', amount: -28.50 },
-  ];
-
+function TransactionsTable({ transactions, onEdit, onDelete, onAdd }) {
   const formatAmount = (amount) => {
     const formatted = Math.abs(amount).toFixed(2);
     return amount >= 0 ? `+$${formatted}` : `-$${formatted}`;
@@ -23,9 +10,17 @@ function TransactionsTable() {
     return amount >= 0 ? '#10b981' : '#ef4444';
   };
 
+  const sortedTransactions = [...transactions].sort((a, b) => new Date(b.date) - new Date(a.date));
+  const recentTransactions = sortedTransactions.slice(0, 10);
+
   return (
     <div style={styles.container}>
-      <h2 style={styles.title}>Recent Transactions</h2>
+      <div style={styles.header}>
+        <h2 style={styles.title}>Recent Transactions</h2>
+        <button onClick={onAdd} style={styles.addButton}>
+          + Add Transaction
+        </button>
+      </div>
       <div style={styles.tableWrapper}>
         <table style={styles.table}>
           <thead>
@@ -34,23 +29,48 @@ function TransactionsTable() {
               <th style={styles.headerCell}>Category</th>
               <th style={styles.headerCell}>Date</th>
               <th style={styles.headerCell}>Amount</th>
+              <th style={styles.headerCell}>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {transactions.map((transaction) => (
-              <tr key={transaction.id} style={styles.row}>
-                <td style={styles.cell}>{transaction.description}</td>
-                <td style={styles.cell}>
-                  <span style={styles.category}>{transaction.category}</span>
-                </td>
-                <td style={styles.cell}>{transaction.date}</td>
-                <td style={{ ...styles.cell, ...styles.amountCell }}>
-                  <span style={{ color: getAmountColor(transaction.amount), fontWeight: '600' }}>
-                    {formatAmount(transaction.amount)}
-                  </span>
+            {recentTransactions.length === 0 ? (
+              <tr>
+                <td colSpan="5" style={styles.emptyCell}>
+                  No transactions yet. Click "Add Transaction" to get started.
                 </td>
               </tr>
-            ))}
+            ) : (
+              recentTransactions.map((transaction) => (
+                <tr key={transaction.id} style={styles.row}>
+                  <td style={styles.cell}>{transaction.title}</td>
+                  <td style={styles.cell}>
+                    <span style={styles.category}>{transaction.category}</span>
+                  </td>
+                  <td style={styles.cell}>{transaction.date}</td>
+                  <td style={{ ...styles.cell, ...styles.amountCell }}>
+                    <span style={{ color: getAmountColor(transaction.amount), fontWeight: '600' }}>
+                      {formatAmount(transaction.amount)}
+                    </span>
+                  </td>
+                  <td style={styles.actionsCell}>
+                    <button
+                      onClick={() => onEdit(transaction)}
+                      style={styles.editButton}
+                      title="Edit"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => onDelete(transaction.id)}
+                      style={styles.deleteButton}
+                      title="Delete"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
@@ -66,11 +86,28 @@ const styles = {
     boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
     border: '1px solid #e2e8f0',
   },
+  header: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '20px',
+  },
   title: {
-    margin: '0 0 20px 0',
+    margin: 0,
     fontSize: '20px',
     fontWeight: '600',
     color: '#1e293b',
+  },
+  addButton: {
+    padding: '10px 20px',
+    border: 'none',
+    backgroundColor: '#3b82f6',
+    color: '#ffffff',
+    borderRadius: '8px',
+    fontSize: '14px',
+    fontWeight: '500',
+    cursor: 'pointer',
+    transition: 'all 0.2s',
   },
   tableWrapper: {
     overflowX: 'auto',
@@ -100,6 +137,12 @@ const styles = {
     fontSize: '15px',
     color: '#334155',
   },
+  emptyCell: {
+    padding: '32px',
+    textAlign: 'center',
+    fontSize: '15px',
+    color: '#64748b',
+  },
   category: {
     backgroundColor: '#f1f5f9',
     color: '#475569',
@@ -110,6 +153,33 @@ const styles = {
   },
   amountCell: {
     textAlign: 'right',
+  },
+  actionsCell: {
+    padding: '16px',
+    textAlign: 'right',
+  },
+  editButton: {
+    padding: '6px 12px',
+    border: '1px solid #e2e8f0',
+    backgroundColor: '#ffffff',
+    color: '#475569',
+    borderRadius: '6px',
+    fontSize: '13px',
+    fontWeight: '500',
+    cursor: 'pointer',
+    marginRight: '8px',
+    transition: 'all 0.2s',
+  },
+  deleteButton: {
+    padding: '6px 12px',
+    border: '1px solid #fecaca',
+    backgroundColor: '#fef2f2',
+    color: '#dc2626',
+    borderRadius: '6px',
+    fontSize: '13px',
+    fontWeight: '500',
+    cursor: 'pointer',
+    transition: 'all 0.2s',
   },
 };
 
