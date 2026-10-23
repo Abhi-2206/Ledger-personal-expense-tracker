@@ -1,10 +1,17 @@
 const path = require('path');
 const transactionManager = require('./transactionManager');
 
-const electron = require('electron');
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
-const ipcMain = electron.ipcMain;
+// Electron exposes its APIs when running in the main process
+// We need to check if we're in the Electron main process
+const isElectronMain = process.versions && process.versions.electron;
+
+if (!isElectronMain) {
+  console.error('This file must be run with Electron, not Node.js directly');
+  process.exit(1);
+}
+
+// In Electron main process, require('electron') returns the actual exports
+const { app, BrowserWindow, ipcMain } = require('electron');
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -28,22 +35,24 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
+  // Initialize transaction manager with user data path
+  transactionManager.initialize(app.getPath('userData'));
   createWindow();
-});
 
-// IPC handlers for transaction operations
-ipcMain.handle('get-transactions', () => {
-  return transactionManager.getAllTransactions();
-});
+  // IPC handlers for transaction operations
+  ipcMain.handle('get-transactions', () => {
+    return transactionManager.getAllTransactions();
+  });
 
-ipcMain.handle('add-transaction', (event, transaction) => {
-  return transactionManager.addTransaction(transaction);
-});
+  ipcMain.handle('add-transaction', (event, transaction) => {
+    return transactionManager.addTransaction(transaction);
+  });
 
-ipcMain.handle('update-transaction', (event, id, transaction) => {
-  return transactionManager.updateTransaction(id, transaction);
-});
+  ipcMain.handle('update-transaction', (event, id, transaction) => {
+    return transactionManager.updateTransaction(id, transaction);
+  });
 
-ipcMain.handle('delete-transaction', (event, id) => {
-  return transactionManager.deleteTransaction(id);
+  ipcMain.handle('delete-transaction', (event, id) => {
+    return transactionManager.deleteTransaction(id);
+  });
 });

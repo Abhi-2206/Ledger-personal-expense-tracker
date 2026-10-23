@@ -2,11 +2,19 @@ const fs = require('fs');
 const path = require('path');
 
 const DATA_FILE = 'transactions.json';
+let userDataDir = null;
+
+// Initialize with the user data directory
+function initialize(appPath) {
+  userDataDir = appPath;
+}
 
 // Get the user data directory
 function getDataDir() {
-  const { app } = require('electron');
-  return app.getPath('userData');
+  if (!userDataDir) {
+    throw new Error('TransactionManager not initialized. Call initialize() first.');
+  }
+  return userDataDir;
 }
 
 // Get the full path to the data file
@@ -133,6 +141,7 @@ function deleteTransaction(id) {
 }
 
 module.exports = {
+  initialize,
   getAllTransactions,
   addTransaction,
   updateTransaction,
