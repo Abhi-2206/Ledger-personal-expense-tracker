@@ -119,6 +119,7 @@ function App() {
                   onAdd={handleAddTransaction}
                   onEdit={handleEditTransaction}
                   onDelete={handleDeleteTransaction}
+                  isDashboard={true}
                 />
               </>
             )}
@@ -135,6 +136,7 @@ function App() {
                 onAdd={handleAddTransaction}
                 onEdit={handleEditTransaction}
                 onDelete={handleDeleteTransaction}
+                isDashboard={false}
               />
             )}
           </div>
