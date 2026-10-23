@@ -19,10 +19,15 @@ function App() {
 
   const loadTransactions = async () => {
     try {
-      const data = await window.electronAPI.getTransactions();
-      setTransactions(data);
+      if (window.electronAPI && typeof window.electronAPI.getTransactions === 'function') {
+        const data = await window.electronAPI.getTransactions();
+        setTransactions(Array.isArray(data) ? data : []);
+      } else {
+        setTransactions([]);
+      }
     } catch (error) {
       console.error('Error loading transactions:', error);
+      setTransactions([]);
     } finally {
       setLoading(false);
     }
@@ -46,11 +51,14 @@ function App() {
     try {
       const success = await window.electronAPI.deleteTransaction(id);
       if (success) {
+        if (editingTransaction && editingTransaction.id === id) {
+          setEditingTransaction(null);
+          setShowForm(false);
+        }
         await loadTransactions();
       } else {
         alert('Failed to delete transaction');
       }
-
     } catch (error) {
       console.error('Error deleting transaction:', error);
       alert('Error deleting transaction');
@@ -68,6 +76,7 @@ function App() {
         if (updated) {
           await loadTransactions();
           setShowForm(false);
+          setEditingTransaction(null);
         } else {
           alert('Failed to update transaction');
         }
@@ -77,6 +86,7 @@ function App() {
         if (added) {
           await loadTransactions();
           setShowForm(false);
+          setEditingTransaction(null);
         } else {
           alert('Failed to add transaction');
         }

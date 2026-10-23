@@ -1,18 +1,30 @@
 import React from 'react';
 
-function TransactionsTable({ transactions, onEdit, onDelete, onAdd }) {
+function TransactionsTable({ transactions = [], onEdit, onDelete, onAdd }) {
   const formatAmount = (amount) => {
-    const formatted = Math.abs(amount).toFixed(2);
-    return amount >= 0 ? `+$${formatted}` : `-$${formatted}`;
+    const num = parseFloat(amount) || 0;
+    const formatted = Math.abs(num).toFixed(2);
+    return num >= 0 ? `+$${formatted}` : `-$${formatted}`;
   };
 
   const getAmountColor = (amount) => {
-    return amount >= 0 ? '#10b981' : '#ef4444';
+    const num = parseFloat(amount) || 0;
+    return num >= 0 ? '#10b981' : '#ef4444';
   };
 
-  const sortedTransactions = [...transactions].sort((a, b) => new Date(b.date) - new Date(a.date));
+  const txList = Array.isArray(transactions) ? transactions : [];
+  const sortedTransactions = [...txList].sort((a, b) => {
+    const dateB = b && b.date ? new Date(b.date).getTime() : 0;
+    const dateA = a && a.date ? new Date(a.date).getTime() : 0;
+    const dateDiff = dateB - dateA;
+    if (dateDiff !== 0) return dateDiff;
+    const createdB = b && b.createdAt ? new Date(b.createdAt).getTime() : 0;
+    const createdA = a && a.createdAt ? new Date(a.createdAt).getTime() : 0;
+    const createdDiff = createdB - createdA;
+    if (createdDiff !== 0) return createdDiff;
+    return (b?.id || 0) - (a?.id || 0);
+  });
   const recentTransactions = sortedTransactions.slice(0, 10);
-
 
   return (
     <div style={styles.container}>
@@ -43,7 +55,7 @@ function TransactionsTable({ transactions, onEdit, onDelete, onAdd }) {
             ) : (
               recentTransactions.map((transaction) => (
                 <tr key={transaction.id} style={styles.row}>
-                  <td style={styles.cell}>{transaction.title}</td>
+                  <td style={styles.cell}>{transaction.title || transaction.description || 'Untitled'}</td>
                   <td style={styles.cell}>
                     <span style={styles.category}>{transaction.category}</span>
                   </td>

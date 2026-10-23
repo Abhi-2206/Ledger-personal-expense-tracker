@@ -1,31 +1,43 @@
 import React from 'react';
 
-function SummaryCards({ transactions }) {
-  const calculateSummary = () => {
-    const income = transactions
-      .filter(t => t.amount > 0)
-      .reduce((sum, t) => sum + t.amount, 0);
+export function calculateFinancialSummary(transactions) {
+  const txList = Array.isArray(transactions) ? transactions : [];
 
-    const expenses = transactions
-      .filter(t => t.amount < 0)
-      .reduce((sum, t) => sum + Math.abs(t.amount), 0);
+  let income = 0;
+  let expenses = 0;
 
-    const balance = income - expenses;
+  txList.forEach((t) => {
+    if (!t) return;
+    const amount = parseFloat(t.amount) || 0;
+    if (t.type === 'income' || (!t.type && amount > 0)) {
+      income += Math.abs(amount);
+    } else if (t.type === 'expense' || (!t.type && amount < 0)) {
+      expenses += Math.abs(amount);
+    }
+  });
 
+  const balance = income - expenses;
 
-    return {
-      balance: balance.toFixed(2),
-      income: income.toFixed(2),
-      expenses: expenses.toFixed(2),
-    };
+  return {
+    income: income.toFixed(2),
+    expenses: expenses.toFixed(2),
+    balance: balance.toFixed(2),
+    numericBalance: balance,
+    numericIncome: income,
+    numericExpenses: expenses,
   };
+}
 
-  const summary = calculateSummary();
+function SummaryCards({ transactions = [] }) {
+  const summary = calculateFinancialSummary(transactions);
 
   const cards = [
     {
       title: 'Total Balance',
-      value: `$${summary.balance}`,
+      value:
+        summary.numericBalance < 0
+          ? `-$${Math.abs(summary.numericBalance).toFixed(2)}`
+          : `$${summary.balance}`,
       icon: '💳',
       color: '#3b82f6',
       bgColor: '#eff6ff',

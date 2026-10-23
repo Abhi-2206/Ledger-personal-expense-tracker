@@ -85,7 +85,8 @@ function addTransaction(transaction) {
   const transactions = readTransactions();
 
   // Generate a unique ID
-  const newId = transactions.length > 0 ? Math.max(...transactions.map(t => t.id)) + 1 : 1;
+  const ids = transactions.map(t => Number(t.id)).filter(id => !isNaN(id));
+  const newId = ids.length > 0 ? Math.max(...ids) + 1 : 1;
 
   const newTransaction = {
     id: newId,
@@ -106,7 +107,7 @@ function addTransaction(transaction) {
 // Update an existing transaction
 function updateTransaction(id, updatedData) {
   const transactions = readTransactions();
-  const index = transactions.findIndex(t => t.id === id);
+  const index = transactions.findIndex(t => t.id === id || String(t.id) === String(id));
 
   if (index === -1) {
     return null;
@@ -115,7 +116,7 @@ function updateTransaction(id, updatedData) {
   transactions[index] = {
     ...transactions[index],
     ...updatedData,
-    id, // Ensure ID doesn't change
+    id: transactions[index].id, // Ensure ID doesn't change
     updatedAt: new Date().toISOString(),
   };
 
@@ -131,7 +132,7 @@ function updateTransaction(id, updatedData) {
 // Delete a transaction
 function deleteTransaction(id) {
   const transactions = readTransactions();
-  const filteredTransactions = transactions.filter(t => t.id !== id);
+  const filteredTransactions = transactions.filter(t => t.id !== id && String(t.id) !== String(id));
 
   if (filteredTransactions.length === transactions.length) {
     // Transaction not found
