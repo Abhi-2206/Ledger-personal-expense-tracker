@@ -13,6 +13,7 @@ function TransactionsTable({ transactions, onEdit, onDelete, onAdd }) {
   const sortedTransactions = [...transactions].sort((a, b) => new Date(b.date) - new Date(a.date));
   const recentTransactions = sortedTransactions.slice(0, 10);
 
+
   return (
     <div style={styles.container}>
       <div style={styles.header}>

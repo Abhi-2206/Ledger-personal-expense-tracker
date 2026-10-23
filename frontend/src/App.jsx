@@ -50,6 +50,7 @@ function App() {
       } else {
         alert('Failed to delete transaction');
       }
+
     } catch (error) {
       console.error('Error deleting transaction:', error);
       alert('Error deleting transaction');

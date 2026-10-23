@@ -44,6 +44,7 @@ app.whenReady().then(() => {
     return transactionManager.getAllTransactions();
   });
 
+
   ipcMain.handle('add-transaction', (event, transaction) => {
     return transactionManager.addTransaction(transaction);
   });

@@ -12,6 +12,7 @@ function SummaryCards({ transactions }) {
 
     const balance = income - expenses;
 
+
     return {
       balance: balance.toFixed(2),
       income: income.toFixed(2),

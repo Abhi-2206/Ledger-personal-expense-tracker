@@ -17,6 +17,8 @@ function getDataDir() {
   return userDataDir;
 }
 
+
+
 // Get the full path to the data file
 function getDataFilePath() {
   return path.join(getDataDir(), DATA_FILE);
