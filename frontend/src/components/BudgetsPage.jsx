@@ -36,15 +36,16 @@ function BudgetRow({ budget, transactions, year, month, onEdit, onDelete }) {
   const pct = budget.amount > 0 ? Math.min((spent / budget.amount) * 100, 100) : 0;
 
   return (
-    <div style={styles.budgetCard}>
+    <div className="interactive-card" style={styles.budgetCard}>
       <div style={styles.cardHeader}>
-        <div style={styles.categoryPill}>{budget.category}</div>
+        <div className="category-badge" style={styles.categoryPill}>{budget.category}</div>
         <div style={{ ...styles.statusBadge, backgroundColor: cfg.bgColor, color: cfg.color }}>
           {cfg.label}
         </div>
         <div style={styles.cardActions}>
           <button
             onClick={() => onEdit(budget)}
+            className="btn-action-edit"
             style={styles.editButton}
             title="Edit budget"
           >
@@ -52,6 +53,7 @@ function BudgetRow({ budget, transactions, year, month, onEdit, onDelete }) {
           </button>
           <button
             onClick={() => onDelete(budget.id)}
+            className="btn-delete"
             style={styles.deleteButton}
             title="Delete budget"
           >
@@ -208,10 +210,10 @@ function BudgetForm({ existingBudgets, editingBudget, onSave, onCancel, isSubmit
         </div>
 
         <div style={styles.formButtons}>
-          <button type="button" onClick={onCancel} style={styles.cancelButton} disabled={isSubmitting}>
+          <button type="button" onClick={onCancel} className="btn-secondary" style={styles.cancelButton} disabled={isSubmitting}>
             Cancel
           </button>
-          <button type="submit" style={styles.saveButton} disabled={isSubmitting}>
+          <button type="submit" className="btn-primary" style={styles.saveButton} disabled={isSubmitting}>
             {isSubmitting ? 'Saving…' : editingBudget ? 'Update Budget' : 'Add Budget'}
           </button>
         </div>
@@ -334,7 +336,7 @@ function BudgetsPage({ transactions }) {
           <p style={styles.monthLabel}>Showing budgets for {monthLabel}</p>
         </div>
         {!showForm && (
-          <button onClick={handleAddClick} style={styles.addButton} id="add-budget-btn">
+          <button onClick={handleAddClick} className="btn-primary" style={styles.addButton} id="add-budget-btn">
             + Add Budget
           </button>
         )}
@@ -366,7 +368,7 @@ function BudgetsPage({ transactions }) {
           <p style={styles.emptySubtitle}>
             Create a monthly budget for an expense category to start tracking your spending.
           </p>
-          <button onClick={handleAddClick} style={styles.addButton}>
+          <button onClick={handleAddClick} className="btn-primary" style={styles.addButton}>
             + Add Your First Budget
           </button>
         </div>
@@ -400,53 +402,55 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: '24px',
+    marginBottom: '20px',
   },
   monthLabel: {
     margin: 0,
-    fontSize: '15px',
+    fontSize: '14px',
     color: '#64748b',
     fontWeight: '500',
   },
   addButton: {
-    padding: '10px 20px',
+    padding: '9px 18px',
     border: 'none',
-    backgroundColor: '#3b82f6',
+    backgroundColor: '#2563eb',
     color: '#ffffff',
     borderRadius: '8px',
     fontSize: '14px',
     fontWeight: '500',
     cursor: 'pointer',
+    transition: 'all 0.15s ease',
   },
   placeholderText: {
-    fontSize: '16px',
+    fontSize: '15px',
     color: '#64748b',
+    padding: '32px 0',
   },
 
   // Empty state
   emptyState: {
     backgroundColor: '#ffffff',
     borderRadius: '12px',
-    padding: '56px 24px',
+    padding: '48px 24px',
     textAlign: 'center',
-    boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+    boxShadow: '0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.04)',
     border: '1px solid #e2e8f0',
   },
   emptyIcon: {
-    fontSize: '48px',
-    marginBottom: '16px',
+    fontSize: '44px',
+    marginBottom: '12px',
   },
   emptyTitle: {
-    fontSize: '20px',
+    fontSize: '18px',
     fontWeight: '600',
-    color: '#1e293b',
+    color: '#0f172a',
     margin: '0 0 8px 0',
   },
   emptySubtitle: {
-    fontSize: '15px',
+    fontSize: '14px',
     color: '#64748b',
-    margin: '0 0 24px 0',
-    maxWidth: '400px',
+    margin: '0 0 20px 0',
+    maxWidth: '380px',
     marginLeft: 'auto',
     marginRight: 'auto',
   },
@@ -455,7 +459,7 @@ const styles = {
   budgetList: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '16px',
+    gap: '14px',
   },
 
   // Budget card
@@ -463,27 +467,27 @@ const styles = {
     backgroundColor: '#ffffff',
     borderRadius: '12px',
     padding: '20px 24px',
-    boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+    boxShadow: '0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.04)',
     border: '1px solid #e2e8f0',
   },
   cardHeader: {
     display: 'flex',
     alignItems: 'center',
-    gap: '12px',
+    gap: '10px',
     marginBottom: '16px',
   },
   categoryPill: {
     backgroundColor: '#f1f5f9',
     color: '#475569',
-    padding: '4px 12px',
-    borderRadius: '12px',
-    fontSize: '14px',
+    padding: '3px 10px',
+    borderRadius: '6px',
+    fontSize: '13px',
     fontWeight: '600',
     flexShrink: 0,
   },
   statusBadge: {
-    padding: '4px 10px',
-    borderRadius: '12px',
+    padding: '3px 8px',
+    borderRadius: '6px',
     fontSize: '12px',
     fontWeight: '600',
   },
@@ -493,17 +497,18 @@ const styles = {
     gap: '8px',
   },
   editButton: {
-    padding: '6px 12px',
-    border: '1px solid #e2e8f0',
+    padding: '5px 12px',
+    border: '1px solid #cbd5e1',
     backgroundColor: '#ffffff',
     color: '#475569',
     borderRadius: '6px',
     fontSize: '13px',
     fontWeight: '500',
     cursor: 'pointer',
+    transition: 'all 0.15s ease',
   },
   deleteButton: {
-    padding: '6px 12px',
+    padding: '5px 12px',
     border: '1px solid #fecaca',
     backgroundColor: '#fef2f2',
     color: '#dc2626',
@@ -511,13 +516,14 @@ const styles = {
     fontSize: '13px',
     fontWeight: '500',
     cursor: 'pointer',
+    transition: 'all 0.15s ease',
   },
 
   // Amount row
   amountsRow: {
     display: 'flex',
     gap: '32px',
-    marginBottom: '12px',
+    marginBottom: '14px',
     flexWrap: 'wrap',
   },
   amountItem: {
@@ -526,8 +532,8 @@ const styles = {
     gap: '2px',
   },
   amountLabel: {
-    fontSize: '12px',
-    color: '#94a3b8',
+    fontSize: '11px',
+    color: '#64748b',
     fontWeight: '600',
     textTransform: 'uppercase',
     letterSpacing: '0.5px',
@@ -535,7 +541,9 @@ const styles = {
   amountValue: {
     fontSize: '20px',
     fontWeight: '700',
-    color: '#1e293b',
+    color: '#0f172a',
+    letterSpacing: '-0.3px',
+    fontVariantNumeric: 'tabular-nums',
   },
 
   // Progress bar
@@ -558,12 +566,14 @@ const styles = {
   },
   progressPct: {
     fontSize: '12px',
-    color: '#94a3b8',
+    color: '#64748b',
+    fontVariantNumeric: 'tabular-nums',
   },
   overBudgetNote: {
     fontSize: '12px',
     color: '#ef4444',
     fontWeight: '600',
+    fontVariantNumeric: 'tabular-nums',
   },
 
   // Form card
@@ -571,15 +581,15 @@ const styles = {
     backgroundColor: '#ffffff',
     borderRadius: '12px',
     padding: '24px',
-    boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+    boxShadow: '0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.04)',
     border: '1px solid #e2e8f0',
     marginBottom: '24px',
   },
   formTitle: {
-    margin: '0 0 20px 0',
-    fontSize: '18px',
+    margin: '0 0 18px 0',
+    fontSize: '17px',
     fontWeight: '600',
-    color: '#1e293b',
+    color: '#0f172a',
   },
   form: {
     display: 'flex',
@@ -598,26 +608,30 @@ const styles = {
     flex: '1 1 200px',
   },
   formLabel: {
-    fontSize: '14px',
+    fontSize: '13px',
     fontWeight: '500',
     color: '#475569',
   },
   select: {
-    padding: '10px 12px',
-    border: '1px solid #e2e8f0',
+    padding: '8px 12px',
+    border: '1px solid #cbd5e1',
     borderRadius: '8px',
-    fontSize: '15px',
+    fontSize: '14px',
     outline: 'none',
     backgroundColor: '#ffffff',
-    color: '#1e293b',
+    color: '#0f172a',
+    height: '38px',
+    boxSizing: 'border-box',
   },
   input: {
-    padding: '10px 12px',
-    border: '1px solid #e2e8f0',
+    padding: '8px 12px',
+    border: '1px solid #cbd5e1',
     borderRadius: '8px',
-    fontSize: '15px',
+    fontSize: '14px',
     outline: 'none',
-    color: '#1e293b',
+    color: '#0f172a',
+    height: '38px',
+    boxSizing: 'border-box',
   },
   inputError: {
     borderColor: '#ef4444',
@@ -636,24 +650,26 @@ const styles = {
     marginTop: '4px',
   },
   cancelButton: {
-    padding: '10px 24px',
-    border: '1px solid #e2e8f0',
+    padding: '9px 18px',
+    border: '1px solid #cbd5e1',
     backgroundColor: '#ffffff',
-    color: '#64748b',
+    color: '#475569',
     borderRadius: '8px',
-    fontSize: '15px',
+    fontSize: '14px',
     fontWeight: '500',
     cursor: 'pointer',
+    transition: 'all 0.15s ease',
   },
   saveButton: {
-    padding: '10px 24px',
+    padding: '9px 18px',
     border: 'none',
-    backgroundColor: '#3b82f6',
+    backgroundColor: '#2563eb',
     color: '#ffffff',
     borderRadius: '8px',
-    fontSize: '15px',
+    fontSize: '14px',
     fontWeight: '500',
     cursor: 'pointer',
+    transition: 'all 0.15s ease',
   },
 
   // Error banner
@@ -665,6 +681,7 @@ const styles = {
     padding: '12px 16px',
     fontSize: '14px',
     marginBottom: '16px',
+    boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.04)',
   },
 };
 

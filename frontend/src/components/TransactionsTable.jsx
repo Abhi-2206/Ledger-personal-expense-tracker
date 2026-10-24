@@ -237,6 +237,7 @@ function TransactionsTable({
             <button
               type="button"
               onClick={handleExportCSV}
+              className="btn-secondary"
               style={isExporting ? { ...styles.exportButton, ...styles.exportButtonDisabled } : styles.exportButton}
               disabled={isExporting}
               title="Export all transactions to CSV"
@@ -245,7 +246,7 @@ function TransactionsTable({
               {isExporting ? 'Exporting...' : 'Export CSV'}
             </button>
           )}
-          <button onClick={onAdd} style={styles.addButton}>
+          <button onClick={onAdd} className="btn-primary" style={styles.addButton}>
             + Add Transaction
           </button>
         </div>
@@ -260,6 +261,7 @@ function TransactionsTable({
           <button
             type="button"
             onClick={() => setExportStatus(null)}
+            className="banner-dismiss-btn"
             style={styles.bannerCloseButton}
             title="Dismiss notification"
           >
@@ -295,6 +297,7 @@ function TransactionsTable({
               <button
                 type="button"
                 onClick={handleResetFilters}
+                className="btn-secondary"
                 style={styles.resetButton}
               >
                 Reset Filters
@@ -395,12 +398,12 @@ function TransactionsTable({
               </tr>
             ) : (
               filteredTransactions.map((transaction) => (
-                <tr key={transaction.id} style={styles.row}>
+                <tr key={transaction.id} className="ledger-table-row" style={styles.row}>
                   <td style={styles.cell}>{transaction.title || transaction.description || 'Untitled'}</td>
                   <td style={styles.cell}>
-                    <span style={styles.category}>{transaction.category}</span>
+                    <span className="category-badge" style={styles.category}>{transaction.category}</span>
                   </td>
-                  <td style={styles.cell}>{transaction.date}</td>
+                  <td style={{ ...styles.cell, ...styles.dateCell }}>{transaction.date}</td>
                   <td style={{ ...styles.cell, ...styles.amountCell }}>
                     <span style={{ color: getAmountColor(transaction.amount), fontWeight: '600' }}>
                       {formatAmount(transaction.amount)}
@@ -409,15 +412,17 @@ function TransactionsTable({
                   <td style={styles.actionsCell}>
                     <button
                       onClick={() => onEdit(transaction)}
+                      className="btn-action-edit"
                       style={styles.editButton}
-                      title="Edit"
+                      title="Edit transaction"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => onDelete(transaction.id)}
+                      className="btn-delete"
                       style={styles.deleteButton}
-                      title="Delete"
+                      title="Delete transaction"
                     >
                       Delete
                     </button>
@@ -437,7 +442,7 @@ const styles = {
     backgroundColor: '#ffffff',
     borderRadius: '12px',
     padding: '24px',
-    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+    boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.04)',
     border: '1px solid #e2e8f0',
   },
   header: {
@@ -453,26 +458,27 @@ const styles = {
   },
   title: {
     margin: 0,
-    fontSize: '20px',
+    fontSize: '18px',
     fontWeight: '600',
-    color: '#1e293b',
+    color: '#0f172a',
+    letterSpacing: '-0.3px',
   },
   addButton: {
-    padding: '10px 20px',
+    padding: '9px 18px',
     border: 'none',
-    backgroundColor: '#3b82f6',
+    backgroundColor: '#2563eb',
     color: '#ffffff',
     borderRadius: '8px',
     fontSize: '14px',
     fontWeight: '500',
     cursor: 'pointer',
-    transition: 'all 0.2s',
+    transition: 'all 0.15s ease',
   },
   exportButton: {
     display: 'inline-flex',
     alignItems: 'center',
     gap: '6px',
-    padding: '10px 18px',
+    padding: '9px 16px',
     border: '1px solid #cbd5e1',
     backgroundColor: '#ffffff',
     color: '#334155',
@@ -480,7 +486,7 @@ const styles = {
     fontSize: '14px',
     fontWeight: '500',
     cursor: 'pointer',
-    transition: 'all 0.2s',
+    transition: 'all 0.15s ease',
   },
   exportButtonDisabled: {
     opacity: 0.6,
@@ -500,6 +506,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.04)',
   },
   errorBanner: {
     backgroundColor: '#fef2f2',
@@ -512,6 +519,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.04)',
   },
   bannerCloseButton: {
     background: 'none',
@@ -527,7 +535,7 @@ const styles = {
     marginBottom: '20px',
     padding: '16px',
     backgroundColor: '#f8fafc',
-    borderRadius: '8px',
+    borderRadius: '10px',
     border: '1px solid #e2e8f0',
     display: 'flex',
     flexDirection: 'column',
@@ -554,11 +562,12 @@ const styles = {
   },
   searchInput: {
     width: '100%',
-    padding: '9px 36px 9px 36px',
-    borderRadius: '6px',
+    height: '38px',
+    padding: '8px 36px 8px 36px',
+    borderRadius: '8px',
     border: '1px solid #cbd5e1',
     fontSize: '14px',
-    color: '#1e293b',
+    color: '#0f172a',
     backgroundColor: '#ffffff',
     outline: 'none',
     boxSizing: 'border-box',
@@ -574,16 +583,17 @@ const styles = {
     padding: '4px',
   },
   resetButton: {
-    padding: '9px 16px',
+    height: '38px',
+    padding: '8px 16px',
     backgroundColor: '#ffffff',
     border: '1px solid #cbd5e1',
-    borderRadius: '6px',
+    borderRadius: '8px',
     color: '#475569',
     fontSize: '13px',
     fontWeight: '500',
     cursor: 'pointer',
     whiteSpace: 'nowrap',
-    transition: 'all 0.2s',
+    transition: 'all 0.15s ease',
   },
   filtersRow: {
     display: 'flex',
@@ -598,7 +608,7 @@ const styles = {
     flex: '1 1 140px',
   },
   filterLabel: {
-    fontSize: '12px',
+    fontSize: '11px',
     fontWeight: '600',
     color: '#64748b',
     textTransform: 'uppercase',
@@ -606,7 +616,7 @@ const styles = {
   },
   select: {
     padding: '8px 12px',
-    borderRadius: '6px',
+    borderRadius: '8px',
     border: '1px solid #cbd5e1',
     fontSize: '14px',
     color: '#334155',
@@ -617,7 +627,7 @@ const styles = {
   },
   dateInput: {
     padding: '8px 12px',
-    borderRadius: '6px',
+    borderRadius: '8px',
     border: '1px solid #cbd5e1',
     fontSize: '14px',
     color: '#334155',
@@ -633,9 +643,9 @@ const styles = {
   },
   resetInlineButton: {
     padding: '8px 16px',
-    backgroundColor: '#3b82f6',
+    backgroundColor: '#2563eb',
     border: 'none',
-    borderRadius: '6px',
+    borderRadius: '8px',
     color: '#ffffff',
     fontSize: '13px',
     fontWeight: '500',
@@ -649,12 +659,12 @@ const styles = {
     borderCollapse: 'collapse',
   },
   headerRow: {
-    borderBottom: '2px solid #e2e8f0',
+    borderBottom: '1px solid #e2e8f0',
   },
   headerCell: {
     padding: '12px 16px',
     textAlign: 'left',
-    fontSize: '14px',
+    fontSize: '12px',
     fontWeight: '600',
     color: '#64748b',
     textTransform: 'uppercase',
@@ -662,37 +672,43 @@ const styles = {
   },
   row: {
     borderBottom: '1px solid #f1f5f9',
-    transition: 'background-color 0.2s ease',
   },
   cell: {
-    padding: '16px',
-    fontSize: '15px',
-    color: '#334155',
+    padding: '13px 16px',
+    fontSize: '14px',
+    color: '#1e293b',
+  },
+  dateCell: {
+    fontSize: '13px',
+    color: '#64748b',
+    fontVariantNumeric: 'tabular-nums',
   },
   emptyCell: {
-    padding: '32px',
+    padding: '40px 24px',
     textAlign: 'center',
-    fontSize: '15px',
+    fontSize: '14px',
     color: '#64748b',
   },
   category: {
     backgroundColor: '#f1f5f9',
     color: '#475569',
-    padding: '4px 12px',
-    borderRadius: '12px',
-    fontSize: '13px',
+    padding: '3px 9px',
+    borderRadius: '6px',
+    fontSize: '12px',
     fontWeight: '500',
   },
   amountCell: {
     textAlign: 'right',
+    fontVariantNumeric: 'tabular-nums',
+    fontSize: '14px',
   },
   actionsCell: {
-    padding: '16px',
+    padding: '12px 16px',
     textAlign: 'right',
   },
   editButton: {
-    padding: '6px 12px',
-    border: '1px solid #e2e8f0',
+    padding: '5px 12px',
+    border: '1px solid #cbd5e1',
     backgroundColor: '#ffffff',
     color: '#475569',
     borderRadius: '6px',
@@ -700,10 +716,10 @@ const styles = {
     fontWeight: '500',
     cursor: 'pointer',
     marginRight: '8px',
-    transition: 'all 0.2s',
+    transition: 'all 0.15s ease',
   },
   deleteButton: {
-    padding: '6px 12px',
+    padding: '5px 12px',
     border: '1px solid #fecaca',
     backgroundColor: '#fef2f2',
     color: '#dc2626',
@@ -711,7 +727,7 @@ const styles = {
     fontSize: '13px',
     fontWeight: '500',
     cursor: 'pointer',
-    transition: 'all 0.2s',
+    transition: 'all 0.15s ease',
   },
 };
 

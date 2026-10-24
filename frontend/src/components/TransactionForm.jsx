@@ -191,12 +191,14 @@ function TransactionForm({ transaction, onSave, onCancel }) {
             <button
               type="button"
               onClick={onCancel}
+              className="btn-secondary"
               style={styles.cancelButton}
             >
               Cancel
             </button>
             <button
               type="submit"
+              className="btn-primary"
               style={styles.saveButton}
             >
               {transaction ? 'Update' : 'Add'} Transaction
@@ -215,7 +217,8 @@ const styles = {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(15, 23, 42, 0.5)',
+    backdropFilter: 'blur(3px)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -224,17 +227,18 @@ const styles = {
   modalContent: {
     backgroundColor: '#ffffff',
     borderRadius: '12px',
-    padding: '32px',
+    padding: '28px 32px',
     width: '90%',
-    maxWidth: '500px',
+    maxWidth: '480px',
     maxHeight: '90vh',
     overflowY: 'auto',
+    boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08)',
   },
   title: {
-    fontSize: '24px',
+    fontSize: '20px',
     fontWeight: '600',
-    color: '#1e293b',
-    margin: '0 0 24px 0',
+    color: '#0f172a',
+    margin: '0 0 20px 0',
   },
   form: {
     display: 'flex',
@@ -247,37 +251,40 @@ const styles = {
     gap: '6px',
   },
   label: {
-    fontSize: '14px',
+    fontSize: '13px',
     fontWeight: '500',
     color: '#475569',
   },
   input: {
-    padding: '10px 12px',
-    border: '1px solid #e2e8f0',
+    padding: '9px 12px',
+    border: '1px solid #cbd5e1',
     borderRadius: '8px',
-    fontSize: '15px',
+    fontSize: '14px',
     outline: 'none',
-    transition: 'border-color 0.2s',
+    color: '#0f172a',
+    backgroundColor: '#ffffff',
   },
   inputError: {
     borderColor: '#ef4444',
   },
   select: {
-    padding: '10px 12px',
-    border: '1px solid #e2e8f0',
+    padding: '9px 12px',
+    border: '1px solid #cbd5e1',
     borderRadius: '8px',
-    fontSize: '15px',
+    fontSize: '14px',
     outline: 'none',
     backgroundColor: '#ffffff',
+    color: '#0f172a',
   },
   textarea: {
-    padding: '10px 12px',
-    border: '1px solid #e2e8f0',
+    padding: '9px 12px',
+    border: '1px solid #cbd5e1',
     borderRadius: '8px',
-    fontSize: '15px',
+    fontSize: '14px',
     outline: 'none',
     resize: 'vertical',
     fontFamily: 'inherit',
+    color: '#0f172a',
   },
   error: {
     fontSize: '12px',
@@ -291,8 +298,8 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
-    fontSize: '15px',
-    color: '#475569',
+    fontSize: '14px',
+    color: '#334155',
     cursor: 'pointer',
   },
   radio: {
@@ -301,31 +308,31 @@ const styles = {
   buttonGroup: {
     display: 'flex',
     gap: '12px',
-    marginTop: '8px',
+    marginTop: '6px',
   },
   cancelButton: {
     flex: 1,
-    padding: '12px 24px',
-    border: '1px solid #e2e8f0',
+    padding: '10px 20px',
+    border: '1px solid #cbd5e1',
     backgroundColor: '#ffffff',
-    color: '#64748b',
+    color: '#475569',
     borderRadius: '8px',
-    fontSize: '15px',
+    fontSize: '14px',
     fontWeight: '500',
     cursor: 'pointer',
-    transition: 'all 0.2s',
+    transition: 'all 0.15s ease',
   },
   saveButton: {
     flex: 1,
-    padding: '12px 24px',
+    padding: '10px 20px',
     border: 'none',
-    backgroundColor: '#3b82f6',
+    backgroundColor: '#2563eb',
     color: '#ffffff',
     borderRadius: '8px',
-    fontSize: '15px',
+    fontSize: '14px',
     fontWeight: '500',
     cursor: 'pointer',
-    transition: 'all 0.2s',
+    transition: 'all 0.15s ease',
   },
 };
 

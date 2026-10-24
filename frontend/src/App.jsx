@@ -177,22 +177,24 @@ const styles = {
   },
   main: {
     flex: 1,
-    overflow: 'auto',
-    padding: '32px',
+    overflowY: 'auto',
+    padding: '28px 36px',
   },
   content: {
-    maxWidth: '1200px',
+    maxWidth: '1160px',
     margin: '0 auto',
   },
   pageTitle: {
-    fontSize: '32px',
+    fontSize: '26px',
     fontWeight: '700',
-    color: '#1e293b',
-    marginBottom: '32px',
+    color: '#0f172a',
+    letterSpacing: '-0.5px',
+    margin: '0 0 24px 0',
   },
   placeholderText: {
-    fontSize: '16px',
+    fontSize: '15px',
     color: '#64748b',
+    padding: '32px 0',
   },
 };
 

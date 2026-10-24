@@ -1,20 +1,76 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 #root {
   width: 100%;
   height: 100vh;
   overflow: hidden;
+  background-color: var(--bg-app);
+}
+
+/* ── Interactive Navigation States ── */
+.sidebar-nav-item {
+  position: relative;
+  transition: all 0.15s ease;
+}
+
+.sidebar-nav-item:hover:not(.active) {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  color: #f8fafc !important;
+}
+
+.sidebar-nav-item:focus-visible {
+  outline: 2px solid #60a5fa !important;
+  outline-offset: 2px !important;
+}
+
+/* ── Table Row Interactive States ── */
+.ledger-table-row {
+  transition: background-color 0.15s ease;
+}
+
+.ledger-table-row:hover {
+  background-color: #f8fafc !important;
+}
+
+/* ── Interactive Button Enhancements ── */
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--color-primary-hover) !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.08);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--color-slate-50) !important;
+  border-color: var(--color-slate-400) !important;
+}
+
+.btn-delete:hover:not(:disabled) {
+  background-color: #fee2e2 !important;
+  border-color: #fca5a5 !important;
+  color: #b91c1c !important;
+}
+
+.btn-action-edit:hover:not(:disabled) {
+  background-color: var(--color-slate-50) !important;
+  border-color: var(--color-slate-400) !important;
+  color: var(--color-slate-800) !important;
+}
+
+/* ── Card Elevations ── */
+.interactive-card {
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.interactive-card:hover {
+  box-shadow: var(--shadow-card-hover) !important;
+}
+
+/* ── Category Pill Styling ── */
+.category-badge {
+  display: inline-flex;
+  align-items: center;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.2px;
+}
+
+/* ── Dismiss Button Transition ── */
+.banner-dismiss-btn:hover {
+  opacity: 0.75;
 }
