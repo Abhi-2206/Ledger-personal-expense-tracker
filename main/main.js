@@ -1,5 +1,6 @@
 const path = require('path');
 const transactionManager = require('./transactionManager');
+const budgetManager = require('./budgetManager');
 
 // Electron exposes its APIs when running in the main process
 // We need to check if we're in the Electron main process
@@ -35,15 +36,17 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
-  // Initialize transaction manager with user data path
-  transactionManager.initialize(app.getPath('userData'));
+  // Initialize managers with user data path
+  const userDataPath = app.getPath('userData');
+  transactionManager.initialize(userDataPath);
+  budgetManager.initialize(userDataPath);
+
   createWindow();
 
   // IPC handlers for transaction operations
   ipcMain.handle('get-transactions', () => {
     return transactionManager.getAllTransactions();
   });
-
 
   ipcMain.handle('add-transaction', (event, transaction) => {
     return transactionManager.addTransaction(transaction);
@@ -55,5 +58,35 @@ app.whenReady().then(() => {
 
   ipcMain.handle('delete-transaction', (event, id) => {
     return transactionManager.deleteTransaction(id);
+  });
+
+  // IPC handlers for budget operations
+  ipcMain.handle('get-budgets', () => {
+    return budgetManager.getAllBudgets();
+  });
+
+  ipcMain.handle('add-budget', (event, budgetData) => {
+    // Validate in main process before delegating
+    if (!budgetData || typeof budgetData !== 'object') {
+      return { success: false, error: 'Invalid budget data.' };
+    }
+    return budgetManager.addBudget(budgetData);
+  });
+
+  ipcMain.handle('update-budget', (event, id, budgetData) => {
+    if (id === undefined || id === null) {
+      return { success: false, error: 'Budget ID is required.' };
+    }
+    if (!budgetData || typeof budgetData !== 'object') {
+      return { success: false, error: 'Invalid budget data.' };
+    }
+    return budgetManager.updateBudget(id, budgetData);
+  });
+
+  ipcMain.handle('delete-budget', (event, id) => {
+    if (id === undefined || id === null) {
+      return false;
+    }
+    return budgetManager.deleteBudget(id);
   });
 });

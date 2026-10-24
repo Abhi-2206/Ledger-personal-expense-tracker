@@ -8,4 +8,10 @@ contextBridge.exposeInMainWorld('electronAPI', {
   addTransaction: (transaction) => ipcRenderer.invoke('add-transaction', transaction),
   updateTransaction: (id, transaction) => ipcRenderer.invoke('update-transaction', id, transaction),
   deleteTransaction: (id) => ipcRenderer.invoke('delete-transaction', id),
+
+  // Budget CRUD operations
+  getBudgets: () => ipcRenderer.invoke('get-budgets'),
+  addBudget: (budgetData) => ipcRenderer.invoke('add-budget', budgetData),
+  updateBudget: (id, budgetData) => ipcRenderer.invoke('update-budget', id, budgetData),
+  deleteBudget: (id) => ipcRenderer.invoke('delete-budget', id),
 });

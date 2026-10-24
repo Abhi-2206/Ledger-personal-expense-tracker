@@ -3,6 +3,7 @@ import Sidebar from './components/Sidebar';
 import SummaryCards from './components/SummaryCards';
 import TransactionsTable from './components/TransactionsTable';
 import TransactionForm from './components/TransactionForm';
+import BudgetsPage from './components/BudgetsPage';
 import './App.css';
 
 function App() {
@@ -144,7 +145,7 @@ function App() {
         {activePage === 'budgets' && (
           <div style={styles.content}>
             <h1 style={styles.pageTitle}>Budgets</h1>
-            <p style={styles.placeholderText}>Budgets page coming soon</p>
+            <BudgetsPage transactions={transactions} />
           </div>
         )}
         {activePage === 'reports' && (
