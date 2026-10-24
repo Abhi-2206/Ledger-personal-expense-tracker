@@ -1,6 +1,7 @@
 const path = require('path');
 const transactionManager = require('./transactionManager');
 const budgetManager = require('./budgetManager');
+const csvExporter = require('./csvExporter');
 
 // Electron exposes its APIs when running in the main process
 // We need to check if we're in the Electron main process
@@ -88,5 +89,25 @@ app.whenReady().then(() => {
       return false;
     }
     return budgetManager.deleteBudget(id);
+  });
+
+  // IPC handler for CSV export
+  ipcMain.handle('export-transactions-csv', async (event, passedTransactions) => {
+    try {
+      let transactions;
+      if (Array.isArray(passedTransactions)) {
+        transactions = passedTransactions;
+      } else {
+        transactions = transactionManager.getAllTransactions();
+      }
+      return await csvExporter.exportTransactionsCSV(transactions);
+    } catch (error) {
+      console.error('Error in export-transactions-csv IPC handler:', error);
+      return {
+        success: false,
+        canceled: false,
+        error: error.message || 'Failed to export transactions as CSV.',
+      };
+    }
   });
 });

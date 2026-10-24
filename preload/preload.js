@@ -14,4 +14,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   addBudget: (budgetData) => ipcRenderer.invoke('add-budget', budgetData),
   updateBudget: (id, budgetData) => ipcRenderer.invoke('update-budget', id, budgetData),
   deleteBudget: (id) => ipcRenderer.invoke('delete-budget', id),
+
+  // CSV Export operation
+  exportTransactionsCSV: (transactions) => ipcRenderer.invoke('export-transactions-csv', transactions),
 });

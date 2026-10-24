@@ -5,6 +5,7 @@ function TransactionsTable({
   onEdit,
   onDelete,
   onAdd,
+  onExport,
   isDashboard = false,
   showFilters = !isDashboard,
   title,
@@ -14,6 +15,90 @@ function TransactionsTable({
   const [selectedType, setSelectedType] = useState('all');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const [isExporting, setIsExporting] = useState(false);
+  const [exportStatus, setExportStatus] = useState(null); // { type: 'success' | 'error', message: string }
+
+  const txList = Array.isArray(transactions) ? transactions : [];
+
+  const handleExportCSV = async () => {
+    if (isExporting) return;
+    setIsExporting(true);
+    setExportStatus(null);
+
+    try {
+      if (typeof onExport === 'function') {
+        const customResult = await onExport();
+        if (customResult && typeof customResult === 'object') {
+          if (customResult.canceled) {
+            return;
+          }
+          if (customResult.success) {
+            const fileLabel = customResult.filename || customResult.filePath || 'CSV file';
+            const emptyNotice = txList.length === 0 ? ' (empty list with headers)' : '';
+            setExportStatus({
+              type: 'success',
+              message: `Successfully exported transactions${emptyNotice} to ${fileLabel}.`,
+            });
+            return;
+          }
+          if (customResult.error) {
+            setExportStatus({
+              type: 'error',
+              message: customResult.error,
+            });
+            return;
+          }
+        }
+        return;
+      }
+
+      if (!window.electronAPI || typeof window.electronAPI.exportTransactionsCSV !== 'function') {
+        setExportStatus({
+          type: 'error',
+          message: 'CSV Export is unavailable in this environment.',
+        });
+        return;
+      }
+
+      // Export all saved transactions
+      const result = await window.electronAPI.exportTransactionsCSV(txList);
+
+      if (!result) {
+        setExportStatus({
+          type: 'error',
+          message: 'Export failed: No response received from system.',
+        });
+        return;
+      }
+
+      if (result.canceled) {
+        // Normal user cancellation - do not show error or success
+        return;
+      }
+
+      if (result.success) {
+        const fileLabel = result.filename || result.filePath || 'CSV file';
+        const emptyNotice = txList.length === 0 ? ' (empty list with headers)' : '';
+        setExportStatus({
+          type: 'success',
+          message: `Successfully exported transactions${emptyNotice} to ${fileLabel}.`,
+        });
+      } else {
+        setExportStatus({
+          type: 'error',
+          message: result.error || 'Failed to export CSV file.',
+        });
+      }
+    } catch (err) {
+      console.error('Error during CSV export:', err);
+      setExportStatus({
+        type: 'error',
+        message: err.message || 'An unexpected error occurred while exporting.',
+      });
+    } finally {
+      setIsExporting(false);
+    }
+  };
 
   const formatAmount = (amount) => {
     const num = parseFloat(amount) || 0;
@@ -25,8 +110,6 @@ function TransactionsTable({
     const num = parseFloat(amount) || 0;
     return num >= 0 ? '#10b981' : '#ef4444';
   };
-
-  const txList = Array.isArray(transactions) ? transactions : [];
 
   const handleResetFilters = () => {
     setSearchTerm('');
@@ -149,10 +232,41 @@ function TransactionsTable({
     <div style={styles.container}>
       <div style={styles.header}>
         <h2 style={styles.title}>{displayTitle}</h2>
-        <button onClick={onAdd} style={styles.addButton}>
-          + Add Transaction
-        </button>
+        <div style={styles.headerActions}>
+          {!isDashboard && (
+            <button
+              type="button"
+              onClick={handleExportCSV}
+              style={isExporting ? { ...styles.exportButton, ...styles.exportButtonDisabled } : styles.exportButton}
+              disabled={isExporting}
+              title="Export all transactions to CSV"
+            >
+              <span style={styles.exportIcon}>📥</span>
+              {isExporting ? 'Exporting...' : 'Export CSV'}
+            </button>
+          )}
+          <button onClick={onAdd} style={styles.addButton}>
+            + Add Transaction
+          </button>
+        </div>
       </div>
+
+      {exportStatus && (
+        <div
+          style={exportStatus.type === 'success' ? styles.successBanner : styles.errorBanner}
+          role={exportStatus.type === 'error' ? 'alert' : 'status'}
+        >
+          <span>{exportStatus.message}</span>
+          <button
+            type="button"
+            onClick={() => setExportStatus(null)}
+            style={styles.bannerCloseButton}
+            title="Dismiss notification"
+          >
+            ✕
+          </button>
+        </div>
+      )}
 
       {showFilters && (
         <div style={styles.filterSection}>
@@ -332,6 +446,11 @@ const styles = {
     alignItems: 'center',
     marginBottom: '20px',
   },
+  headerActions: {
+    display: 'flex',
+    gap: '12px',
+    alignItems: 'center',
+  },
   title: {
     margin: 0,
     fontSize: '20px',
@@ -348,6 +467,61 @@ const styles = {
     fontWeight: '500',
     cursor: 'pointer',
     transition: 'all 0.2s',
+  },
+  exportButton: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '6px',
+    padding: '10px 18px',
+    border: '1px solid #cbd5e1',
+    backgroundColor: '#ffffff',
+    color: '#334155',
+    borderRadius: '8px',
+    fontSize: '14px',
+    fontWeight: '500',
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+  },
+  exportButtonDisabled: {
+    opacity: 0.6,
+    cursor: 'not-allowed',
+  },
+  exportIcon: {
+    fontSize: '14px',
+  },
+  successBanner: {
+    backgroundColor: '#ecfdf5',
+    border: '1px solid #a7f3d0',
+    color: '#065f46',
+    borderRadius: '8px',
+    padding: '12px 16px',
+    fontSize: '14px',
+    marginBottom: '16px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  errorBanner: {
+    backgroundColor: '#fef2f2',
+    border: '1px solid #fecaca',
+    color: '#dc2626',
+    borderRadius: '8px',
+    padding: '12px 16px',
+    fontSize: '14px',
+    marginBottom: '16px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  bannerCloseButton: {
+    background: 'none',
+    border: 'none',
+    fontSize: '14px',
+    color: 'inherit',
+    cursor: 'pointer',
+    padding: '0 4px',
+    marginLeft: '12px',
+    lineHeight: 1,
   },
   filterSection: {
     marginBottom: '20px',
