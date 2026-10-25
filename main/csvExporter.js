@@ -159,7 +159,7 @@ async function exportTransactionsCSV(transactions = [], options = {}) {
     return {
       success: false,
       canceled: false,
-      error: `Could not open save dialog: ${dialogErr.message || dialogErr}`,
+      error: 'Could not open save dialog.',
     };
   }
 
@@ -189,7 +189,7 @@ async function exportTransactionsCSV(transactions = [], options = {}) {
       success: false,
       canceled: false,
       filePath,
-      error: `Failed to write file: ${writeErr.message || writeErr}`,
+      error: 'Failed to write CSV file to destination.',
     };
   }
 }

@@ -38,57 +38,120 @@ function createWindow() {
 
 app.whenReady().then(() => {
   // Initialize managers with user data path
-  const userDataPath = app.getPath('userData');
-  transactionManager.initialize(userDataPath);
-  budgetManager.initialize(userDataPath);
+  try {
+    const userDataPath = app.getPath('userData');
+    transactionManager.initialize(userDataPath);
+    budgetManager.initialize(userDataPath);
+  } catch (initErr) {
+    console.error('Error initializing data managers:', initErr.message);
+  }
 
   createWindow();
 
   // IPC handlers for transaction operations
   ipcMain.handle('get-transactions', () => {
-    return transactionManager.getAllTransactions();
+    try {
+      const transactions = transactionManager.getAllTransactions();
+      return Array.isArray(transactions) ? transactions : [];
+    } catch (error) {
+      console.error('Error in get-transactions IPC handler:', error.message);
+      return [];
+    }
   });
 
   ipcMain.handle('add-transaction', (event, transaction) => {
-    return transactionManager.addTransaction(transaction);
+    if (!transaction || typeof transaction !== 'object' || Array.isArray(transaction)) {
+      console.error('Invalid transaction data provided to add-transaction IPC handler');
+      return null;
+    }
+    try {
+      const result = transactionManager.addTransaction(transaction);
+      return result || null;
+    } catch (error) {
+      console.error('Error in add-transaction IPC handler:', error.message);
+      return null;
+    }
   });
 
   ipcMain.handle('update-transaction', (event, id, transaction) => {
-    return transactionManager.updateTransaction(id, transaction);
+    if (id === undefined || id === null) {
+      console.error('Transaction ID is required for update-transaction IPC handler');
+      return null;
+    }
+    if (!transaction || typeof transaction !== 'object' || Array.isArray(transaction)) {
+      console.error('Invalid transaction data provided to update-transaction IPC handler');
+      return null;
+    }
+    try {
+      const result = transactionManager.updateTransaction(id, transaction);
+      return result || null;
+    } catch (error) {
+      console.error('Error in update-transaction IPC handler:', error.message);
+      return null;
+    }
   });
 
   ipcMain.handle('delete-transaction', (event, id) => {
-    return transactionManager.deleteTransaction(id);
+    if (id === undefined || id === null) {
+      console.error('Transaction ID is required for delete-transaction IPC handler');
+      return false;
+    }
+    try {
+      return Boolean(transactionManager.deleteTransaction(id));
+    } catch (error) {
+      console.error('Error in delete-transaction IPC handler:', error.message);
+      return false;
+    }
   });
 
   // IPC handlers for budget operations
   ipcMain.handle('get-budgets', () => {
-    return budgetManager.getAllBudgets();
+    try {
+      const budgets = budgetManager.getAllBudgets();
+      return Array.isArray(budgets) ? budgets : [];
+    } catch (error) {
+      console.error('Error in get-budgets IPC handler:', error.message);
+      return [];
+    }
   });
 
   ipcMain.handle('add-budget', (event, budgetData) => {
-    // Validate in main process before delegating
-    if (!budgetData || typeof budgetData !== 'object') {
+    if (!budgetData || typeof budgetData !== 'object' || Array.isArray(budgetData)) {
       return { success: false, error: 'Invalid budget data.' };
     }
-    return budgetManager.addBudget(budgetData);
+    try {
+      return budgetManager.addBudget(budgetData);
+    } catch (error) {
+      console.error('Error in add-budget IPC handler:', error.message);
+      return { success: false, error: 'Failed to add budget.' };
+    }
   });
 
   ipcMain.handle('update-budget', (event, id, budgetData) => {
     if (id === undefined || id === null) {
       return { success: false, error: 'Budget ID is required.' };
     }
-    if (!budgetData || typeof budgetData !== 'object') {
+    if (!budgetData || typeof budgetData !== 'object' || Array.isArray(budgetData)) {
       return { success: false, error: 'Invalid budget data.' };
     }
-    return budgetManager.updateBudget(id, budgetData);
+    try {
+      return budgetManager.updateBudget(id, budgetData);
+    } catch (error) {
+      console.error('Error in update-budget IPC handler:', error.message);
+      return { success: false, error: 'Failed to update budget.' };
+    }
   });
 
   ipcMain.handle('delete-budget', (event, id) => {
     if (id === undefined || id === null) {
       return false;
     }
-    return budgetManager.deleteBudget(id);
+    try {
+      return Boolean(budgetManager.deleteBudget(id));
+    } catch (error) {
+      console.error('Error in delete-budget IPC handler:', error.message);
+      return false;
+    }
   });
 
   // IPC handler for CSV export
@@ -102,11 +165,11 @@ app.whenReady().then(() => {
       }
       return await csvExporter.exportTransactionsCSV(transactions);
     } catch (error) {
-      console.error('Error in export-transactions-csv IPC handler:', error);
+      console.error('Error in export-transactions-csv IPC handler:', error.message);
       return {
         success: false,
         canceled: false,
-        error: error.message || 'Failed to export transactions as CSV.',
+        error: 'Failed to export transactions as CSV.',
       };
     }
   });
