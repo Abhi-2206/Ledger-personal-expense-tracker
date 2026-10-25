@@ -186,21 +186,21 @@ function ReportsPage({ transactions }) {
           title="Monthly Income"
           value={`$${summary.income}`}
           icon="📈"
-          color="#10b981"
+          color="var(--color-success)"
           bgColor="#ecfdf5"
         />
         <SummaryCard
           title="Monthly Expenses"
           value={`$${summary.expenses}`}
           icon="📉"
-          color="#ef4444"
+          color="var(--color-danger)"
           bgColor="#fef2f2"
         />
         <SummaryCard
           title="Net Balance"
           value={netFormatted}
           icon="💳"
-          color={netIsNegative ? '#ef4444' : '#3b82f6'}
+          color={netIsNegative ? 'var(--color-danger)' : '#3b82f6'}
           bgColor={netIsNegative ? '#fef2f2' : '#eff6ff'}
         />
       </div>
@@ -255,7 +255,7 @@ const styles = {
   monthLabel: {
     fontSize: '12px',
     fontWeight: '600',
-    color: '#64748b',
+    color: 'var(--text-muted)',
     textTransform: 'uppercase',
     letterSpacing: '0.5px',
     whiteSpace: 'nowrap',
@@ -263,17 +263,17 @@ const styles = {
   monthInput: {
     height: '38px',
     padding: '8px 12px',
-    border: '1px solid #cbd5e1',
+    border: '1px solid var(--border-input)',
     borderRadius: '8px',
     fontSize: '14px',
-    color: '#0f172a',
-    backgroundColor: '#ffffff',
+    color: 'var(--text-primary)',
+    backgroundColor: 'var(--bg-surface)',
     outline: 'none',
     cursor: 'pointer',
   },
   monthDisplay: {
     fontSize: '14px',
-    color: '#64748b',
+    color: 'var(--text-muted)',
     fontWeight: '500',
   },
 
@@ -285,14 +285,14 @@ const styles = {
     marginBottom: '28px',
   },
   card: {
-    backgroundColor: '#ffffff',
+    backgroundColor: 'var(--bg-surface)',
     borderRadius: '12px',
     padding: '20px 24px',
     display: 'flex',
     alignItems: 'center',
     gap: '16px',
     boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.04)',
-    border: '1px solid #e2e8f0',
+    border: '1px solid var(--border-subtle)',
   },
   iconContainer: {
     width: '48px',
@@ -313,7 +313,7 @@ const styles = {
   cardTitle: {
     margin: 0,
     fontSize: '12px',
-    color: '#64748b',
+    color: 'var(--text-muted)',
     fontWeight: '600',
     textTransform: 'uppercase',
     letterSpacing: '0.5px',
@@ -328,11 +328,11 @@ const styles = {
 
   // Section
   section: {
-    backgroundColor: '#ffffff',
+    backgroundColor: 'var(--bg-surface)',
     borderRadius: '12px',
     padding: '24px',
     boxShadow: '0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.04)',
-    border: '1px solid #e2e8f0',
+    border: '1px solid var(--border-subtle)',
   },
   sectionHeader: {
     display: 'flex',
@@ -346,12 +346,12 @@ const styles = {
     margin: 0,
     fontSize: '18px',
     fontWeight: '600',
-    color: '#0f172a',
+    color: 'var(--text-primary)',
     letterSpacing: '-0.3px',
   },
   totalChip: {
     backgroundColor: '#f1f5f9',
-    color: '#475569',
+    color: 'var(--text-body)',
     padding: '3px 10px',
     borderRadius: '6px',
     fontSize: '12px',
@@ -380,19 +380,19 @@ const styles = {
   catName: {
     fontSize: '14px',
     fontWeight: '600',
-    color: '#0f172a',
+    color: 'var(--text-primary)',
     flex: 1,
   },
   catAmount: {
     fontSize: '14px',
     fontWeight: '600',
-    color: '#ef4444',
+    color: 'var(--color-danger)',
     whiteSpace: 'nowrap',
     fontVariantNumeric: 'tabular-nums',
   },
   catPct: {
     fontSize: '12px',
-    color: '#64748b',
+    color: 'var(--text-muted)',
     width: '44px',
     textAlign: 'right',
     whiteSpace: 'nowrap',
@@ -406,7 +406,7 @@ const styles = {
   },
   barFill: {
     height: '100%',
-    backgroundColor: '#2563eb',
+    backgroundColor: 'var(--color-primary)',
     borderRadius: '4px',
     transition: 'width 0.3s ease',
     minWidth: 0,
@@ -424,12 +424,12 @@ const styles = {
   emptyTitle: {
     fontSize: '18px',
     fontWeight: '600',
-    color: '#0f172a',
+    color: 'var(--text-primary)',
     margin: '0 0 8px 0',
   },
   emptySubtitle: {
     fontSize: '14px',
-    color: '#64748b',
+    color: 'var(--text-muted)',
     margin: 0,
     maxWidth: '380px',
     marginLeft: 'auto',

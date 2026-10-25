@@ -12,12 +12,12 @@
 }
 
 .sidebar-nav-item:hover:not(.active) {
-  background-color: rgba(255, 255, 255, 0.08) !important;
-  color: #f8fafc !important;
+  background-color: var(--bg-subtle) !important;
+  color: var(--text-primary) !important;
 }
 
 .sidebar-nav-item:focus-visible {
-  outline: 2px solid #60a5fa !important;
+  outline: 2px solid var(--color-primary) !important;
   outline-offset: 2px !important;
 }
 
@@ -27,7 +27,7 @@
 }
 
 .ledger-table-row:hover {
-  background-color: #f8fafc !important;
+  background-color: var(--bg-subtle) !important;
 }
 
 /* ── Interactive Button Enhancements ── */
@@ -37,20 +37,20 @@
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background-color: var(--color-slate-50) !important;
+  background-color: var(--bg-subtle) !important;
   border-color: var(--color-slate-400) !important;
 }
 
 .btn-delete:hover:not(:disabled) {
-  background-color: #fee2e2 !important;
-  border-color: #fca5a5 !important;
-  color: #b91c1c !important;
+  background-color: var(--color-danger-light) !important;
+  border-color: var(--color-danger-border) !important;
+  color: var(--color-danger-hover) !important;
 }
 
 .btn-action-edit:hover:not(:disabled) {
-  background-color: var(--color-slate-50) !important;
+  background-color: var(--bg-subtle) !important;
   border-color: var(--color-slate-400) !important;
-  color: var(--color-slate-800) !important;
+  color: var(--text-primary) !important;
 }
 
 /* ── Card Elevations ── */

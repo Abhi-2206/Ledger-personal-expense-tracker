@@ -35,7 +35,7 @@ function GoalRow({ goal, onEdit, onDelete, onAddContribution }) {
   const isComplete = currentAmount >= targetAmount;
   const isOverfunded = currentAmount > targetAmount;
 
-  const statusColor = isOverfunded ? '#8b5cf6' : isComplete ? '#10b981' : '#3b82f6';
+  const statusColor = isOverfunded ? '#8b5cf6' : isComplete ? 'var(--color-success)' : '#3b82f6';
   const statusLabel = isOverfunded ? 'Overfunded' : isComplete ? 'Completed' : 'In Progress';
 
   return (
@@ -86,7 +86,7 @@ function GoalRow({ goal, onEdit, onDelete, onAddContribution }) {
         </div>
         <div style={styles.amountItem}>
           <span style={styles.amountLabel}>Remaining</span>
-          <span style={{ ...styles.amountValue, color: remaining === 0 ? '#10b981' : '#64748b' }}>
+          <span style={{ ...styles.amountValue, color: remaining === 0 ? 'var(--color-success)' : 'var(--text-muted)' }}>
             {remaining === 0 ? 'Done' : formatCurrency(remaining)}
           </span>
         </div>
@@ -533,14 +533,14 @@ const styles = {
   pageSubtitle: {
     margin: 0,
     fontSize: '14px',
-    color: '#64748b',
+    color: 'var(--text-muted)',
     fontWeight: '500',
   },
   addButton: {
     padding: '9px 18px',
     border: 'none',
-    backgroundColor: '#2563eb',
-    color: '#ffffff',
+    backgroundColor: 'var(--color-primary)',
+    color: 'var(--bg-surface)',
     borderRadius: '8px',
     fontSize: '14px',
     fontWeight: '500',
@@ -549,18 +549,18 @@ const styles = {
   },
   placeholderText: {
     fontSize: '15px',
-    color: '#64748b',
+    color: 'var(--text-muted)',
     padding: '32px 0',
   },
 
   // Empty state
   emptyState: {
-    backgroundColor: '#ffffff',
+    backgroundColor: 'var(--bg-surface)',
     borderRadius: '12px',
     padding: '48px 24px',
     textAlign: 'center',
     boxShadow: '0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.04)',
-    border: '1px solid #e2e8f0',
+    border: '1px solid var(--border-subtle)',
   },
   emptyIcon: {
     fontSize: '44px',
@@ -569,12 +569,12 @@ const styles = {
   emptyTitle: {
     fontSize: '18px',
     fontWeight: '600',
-    color: '#0f172a',
+    color: 'var(--text-primary)',
     margin: '0 0 8px 0',
   },
   emptySubtitle: {
     fontSize: '14px',
-    color: '#64748b',
+    color: 'var(--text-muted)',
     margin: '0 0 20px 0',
     maxWidth: '380px',
     marginLeft: 'auto',
@@ -590,11 +590,11 @@ const styles = {
 
   // Goal card
   goalCard: {
-    backgroundColor: '#ffffff',
+    backgroundColor: 'var(--bg-surface)',
     borderRadius: '12px',
     padding: '20px 24px',
     boxShadow: '0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.04)',
-    border: '1px solid #e2e8f0',
+    border: '1px solid var(--border-subtle)',
   },
   cardHeader: {
     display: 'flex',
@@ -606,7 +606,7 @@ const styles = {
   goalName: {
     fontSize: '16px',
     fontWeight: '600',
-    color: '#0f172a',
+    color: 'var(--text-primary)',
     flex: 1,
     minWidth: '120px',
   },
@@ -624,8 +624,8 @@ const styles = {
   contributeButton: {
     padding: '5px 12px',
     border: 'none',
-    backgroundColor: '#2563eb',
-    color: '#ffffff',
+    backgroundColor: 'var(--color-primary)',
+    color: 'var(--bg-surface)',
     borderRadius: '6px',
     fontSize: '13px',
     fontWeight: '500',
@@ -634,9 +634,9 @@ const styles = {
   },
   editButton: {
     padding: '5px 12px',
-    border: '1px solid #cbd5e1',
-    backgroundColor: '#ffffff',
-    color: '#475569',
+    border: '1px solid var(--border-input)',
+    backgroundColor: 'var(--bg-surface)',
+    color: 'var(--text-body)',
     borderRadius: '6px',
     fontSize: '13px',
     fontWeight: '500',
@@ -669,7 +669,7 @@ const styles = {
   },
   amountLabel: {
     fontSize: '11px',
-    color: '#64748b',
+    color: 'var(--text-muted)',
     fontWeight: '600',
     textTransform: 'uppercase',
     letterSpacing: '0.5px',
@@ -677,7 +677,7 @@ const styles = {
   amountValue: {
     fontSize: '20px',
     fontWeight: '700',
-    color: '#0f172a',
+    color: 'var(--text-primary)',
     letterSpacing: '-0.3px',
     fontVariantNumeric: 'tabular-nums',
   },
@@ -702,7 +702,7 @@ const styles = {
   },
   progressPct: {
     fontSize: '12px',
-    color: '#64748b',
+    color: 'var(--text-muted)',
     fontVariantNumeric: 'tabular-nums',
   },
   overfundedNote: {
@@ -723,29 +723,29 @@ const styles = {
   },
   targetDateLabel: {
     fontSize: '12px',
-    color: '#64748b',
+    color: 'var(--text-muted)',
     fontWeight: '500',
   },
   targetDateValue: {
     fontSize: '13px',
-    color: '#475569',
+    color: 'var(--text-body)',
     fontWeight: '600',
   },
 
   // Form card
   formCard: {
-    backgroundColor: '#ffffff',
+    backgroundColor: 'var(--bg-surface)',
     borderRadius: '12px',
     padding: '24px',
     boxShadow: '0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.04)',
-    border: '1px solid #e2e8f0',
+    border: '1px solid var(--border-subtle)',
     marginBottom: '24px',
   },
   formTitle: {
     margin: '0 0 18px 0',
     fontSize: '17px',
     fontWeight: '600',
-    color: '#0f172a',
+    color: 'var(--text-primary)',
   },
   form: {
     display: 'flex',
@@ -766,24 +766,24 @@ const styles = {
   formLabel: {
     fontSize: '13px',
     fontWeight: '500',
-    color: '#475569',
+    color: 'var(--text-body)',
   },
   input: {
     padding: '8px 12px',
-    border: '1px solid #cbd5e1',
+    border: '1px solid var(--border-input)',
     borderRadius: '8px',
     fontSize: '14px',
     outline: 'none',
-    color: '#0f172a',
+    color: 'var(--text-primary)',
     height: '38px',
     boxSizing: 'border-box',
   },
   inputError: {
-    borderColor: '#ef4444',
+    borderColor: 'var(--color-danger)',
   },
   errorMsg: {
     fontSize: '12px',
-    color: '#ef4444',
+    color: 'var(--color-danger)',
   },
   formButtons: {
     display: 'flex',
@@ -792,9 +792,9 @@ const styles = {
   },
   cancelButton: {
     padding: '9px 18px',
-    border: '1px solid #cbd5e1',
-    backgroundColor: '#ffffff',
-    color: '#475569',
+    border: '1px solid var(--border-input)',
+    backgroundColor: 'var(--bg-surface)',
+    color: 'var(--text-body)',
     borderRadius: '8px',
     fontSize: '14px',
     fontWeight: '500',
@@ -804,8 +804,8 @@ const styles = {
   saveButton: {
     padding: '9px 18px',
     border: 'none',
-    backgroundColor: '#2563eb',
-    color: '#ffffff',
+    backgroundColor: 'var(--color-primary)',
+    color: 'var(--bg-surface)',
     borderRadius: '8px',
     fontSize: '14px',
     fontWeight: '500',

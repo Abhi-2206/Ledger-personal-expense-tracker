@@ -83,14 +83,14 @@ const styles = {
     marginBottom: '28px',
   },
   card: {
-    backgroundColor: '#ffffff',
+    backgroundColor: 'var(--bg-surface)',
     borderRadius: '12px',
     padding: '20px 24px',
     display: 'flex',
     alignItems: 'center',
     gap: '16px',
-    boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.04)',
-    border: '1px solid #e2e8f0',
+    boxShadow: 'var(--shadow-card)',
+    border: '1px solid var(--border-subtle)',
   },
   iconContainer: {
     width: '48px',
@@ -111,7 +111,7 @@ const styles = {
   title: {
     margin: 0,
     fontSize: '12px',
-    color: '#64748b',
+    color: 'var(--text-muted)',
     fontWeight: '600',
     textTransform: 'uppercase',
     letterSpacing: '0.5px',

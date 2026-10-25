@@ -187,7 +187,7 @@ const styles = {
     display: 'flex',
     width: '100%',
     height: '100vh',
-    backgroundColor: '#f8fafc',
+    backgroundColor: 'var(--bg-app)',
   },
   main: {
     flex: 1,
@@ -201,13 +201,13 @@ const styles = {
   pageTitle: {
     fontSize: '26px',
     fontWeight: '700',
-    color: '#0f172a',
+    color: 'var(--text-primary)',
     letterSpacing: '-0.5px',
     margin: '0 0 24px 0',
   },
   placeholderText: {
     fontSize: '15px',
-    color: '#64748b',
+    color: 'var(--text-muted)',
     padding: '32px 0',
   },
 };

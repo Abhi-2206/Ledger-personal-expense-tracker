@@ -50,7 +50,7 @@ function RuleRow({ rule, onEdit, onToggleStatus, onDelete }) {
         <div style={{ ...styles.typeBadge, backgroundColor: isIncome ? '#ecfdf5' : '#fef2f2', color: isIncome ? '#059669' : '#dc2626' }}>
           {isIncome ? 'Income' : 'Expense'}
         </div>
-        <div style={{ ...styles.statusBadge, backgroundColor: rule.active ? '#eff6ff' : '#f1f5f9', color: rule.active ? '#2563eb' : '#64748b' }}>
+        <div style={{ ...styles.statusBadge, backgroundColor: rule.active ? '#eff6ff' : '#f1f5f9', color: rule.active ? 'var(--color-primary)' : 'var(--text-muted)' }}>
           {rule.active ? 'Active' : 'Paused'}
         </div>
         <div style={styles.cardActions}>
@@ -111,7 +111,7 @@ function RuleRow({ rule, onEdit, onToggleStatus, onDelete }) {
         )}
         <div style={styles.dateItem}>
           <span style={styles.dateLabel}>Next Due:</span>
-          <span style={{ ...styles.dateValue, color: isOverdue ? '#dc2626' : isDueSoon ? '#f59e0b' : '#475569', fontWeight: isOverdue || isDueSoon ? '600' : '500' }}>
+          <span style={{ ...styles.dateValue, color: isOverdue ? '#dc2626' : isDueSoon ? '#f59e0b' : 'var(--text-body)', fontWeight: isOverdue || isDueSoon ? '600' : '500' }}>
             {formatDate(rule.nextDueDate)}
             {isOverdue && ' (Overdue)'}
             {isDueSoon && !isOverdue && ' (Due Soon)'}
@@ -612,7 +612,7 @@ const styles = {
   pageSubtitle: {
     margin: 0,
     fontSize: '14px',
-    color: '#64748b',
+    color: 'var(--text-muted)',
     fontWeight: '500',
   },
   headerActions: {
@@ -622,8 +622,8 @@ const styles = {
   addButton: {
     padding: '9px 18px',
     border: 'none',
-    backgroundColor: '#2563eb',
-    color: '#ffffff',
+    backgroundColor: 'var(--color-primary)',
+    color: 'var(--bg-surface)',
     borderRadius: '8px',
     fontSize: '14px',
     fontWeight: '500',
@@ -633,8 +633,8 @@ const styles = {
   processButton: {
     padding: '9px 18px',
     border: 'none',
-    backgroundColor: '#10b981',
-    color: '#ffffff',
+    backgroundColor: 'var(--color-success)',
+    color: 'var(--bg-surface)',
     borderRadius: '8px',
     fontSize: '14px',
     fontWeight: '500',
@@ -643,18 +643,18 @@ const styles = {
   },
   placeholderText: {
     fontSize: '15px',
-    color: '#64748b',
+    color: 'var(--text-muted)',
     padding: '32px 0',
   },
 
   // Empty state
   emptyState: {
-    backgroundColor: '#ffffff',
+    backgroundColor: 'var(--bg-surface)',
     borderRadius: '12px',
     padding: '48px 24px',
     textAlign: 'center',
     boxShadow: '0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.04)',
-    border: '1px solid #e2e8f0',
+    border: '1px solid var(--border-subtle)',
   },
   emptyIcon: {
     fontSize: '44px',
@@ -663,12 +663,12 @@ const styles = {
   emptyTitle: {
     fontSize: '18px',
     fontWeight: '600',
-    color: '#0f172a',
+    color: 'var(--text-primary)',
     margin: '0 0 8px 0',
   },
   emptySubtitle: {
     fontSize: '14px',
-    color: '#64748b',
+    color: 'var(--text-muted)',
     margin: '0 0 20px 0',
     maxWidth: '380px',
     marginLeft: 'auto',
@@ -684,11 +684,11 @@ const styles = {
 
   // Rule card
   ruleCard: {
-    backgroundColor: '#ffffff',
+    backgroundColor: 'var(--bg-surface)',
     borderRadius: '12px',
     padding: '20px 24px',
     boxShadow: '0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.04)',
-    border: '1px solid #e2e8f0',
+    border: '1px solid var(--border-subtle)',
   },
   cardHeader: {
     display: 'flex',
@@ -700,7 +700,7 @@ const styles = {
   ruleTitle: {
     fontSize: '16px',
     fontWeight: '600',
-    color: '#0f172a',
+    color: 'var(--text-primary)',
     flex: 1,
     minWidth: '120px',
   },
@@ -723,9 +723,9 @@ const styles = {
   },
   toggleButton: {
     padding: '5px 12px',
-    border: '1px solid #cbd5e1',
-    backgroundColor: '#ffffff',
-    color: '#475569',
+    border: '1px solid var(--border-input)',
+    backgroundColor: 'var(--bg-surface)',
+    color: 'var(--text-body)',
     borderRadius: '6px',
     fontSize: '13px',
     fontWeight: '500',
@@ -734,9 +734,9 @@ const styles = {
   },
   editButton: {
     padding: '5px 12px',
-    border: '1px solid #cbd5e1',
-    backgroundColor: '#ffffff',
-    color: '#475569',
+    border: '1px solid var(--border-input)',
+    backgroundColor: 'var(--bg-surface)',
+    color: 'var(--text-body)',
     borderRadius: '6px',
     fontSize: '13px',
     fontWeight: '500',
@@ -769,7 +769,7 @@ const styles = {
   },
   detailLabel: {
     fontSize: '11px',
-    color: '#64748b',
+    color: 'var(--text-muted)',
     fontWeight: '600',
     textTransform: 'uppercase',
     letterSpacing: '0.5px',
@@ -777,7 +777,7 @@ const styles = {
   detailValue: {
     fontSize: '15px',
     fontWeight: '600',
-    color: '#0f172a',
+    color: 'var(--text-primary)',
     letterSpacing: '-0.2px',
   },
 
@@ -796,29 +796,29 @@ const styles = {
   },
   dateLabel: {
     fontSize: '12px',
-    color: '#64748b',
+    color: 'var(--text-muted)',
     fontWeight: '500',
   },
   dateValue: {
     fontSize: '13px',
-    color: '#475569',
+    color: 'var(--text-body)',
     fontWeight: '600',
   },
 
   // Form card
   formCard: {
-    backgroundColor: '#ffffff',
+    backgroundColor: 'var(--bg-surface)',
     borderRadius: '12px',
     padding: '24px',
     boxShadow: '0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.04)',
-    border: '1px solid #e2e8f0',
+    border: '1px solid var(--border-subtle)',
     marginBottom: '24px',
   },
   formTitle: {
     margin: '0 0 18px 0',
     fontSize: '17px',
     fontWeight: '600',
-    color: '#0f172a',
+    color: 'var(--text-primary)',
   },
   form: {
     display: 'flex',
@@ -839,35 +839,35 @@ const styles = {
   formLabel: {
     fontSize: '13px',
     fontWeight: '500',
-    color: '#475569',
+    color: 'var(--text-body)',
   },
   input: {
     padding: '8px 12px',
-    border: '1px solid #cbd5e1',
+    border: '1px solid var(--border-input)',
     borderRadius: '8px',
     fontSize: '14px',
     outline: 'none',
-    color: '#0f172a',
+    color: 'var(--text-primary)',
     height: '38px',
     boxSizing: 'border-box',
   },
   inputError: {
-    borderColor: '#ef4444',
+    borderColor: 'var(--color-danger)',
   },
   select: {
     padding: '8px 12px',
-    border: '1px solid #cbd5e1',
+    border: '1px solid var(--border-input)',
     borderRadius: '8px',
     fontSize: '14px',
     outline: 'none',
-    backgroundColor: '#ffffff',
-    color: '#0f172a',
+    backgroundColor: 'var(--bg-surface)',
+    color: 'var(--text-primary)',
     height: '38px',
     boxSizing: 'border-box',
   },
   errorMsg: {
     fontSize: '12px',
-    color: '#ef4444',
+    color: 'var(--color-danger)',
   },
   formButtons: {
     display: 'flex',
@@ -876,9 +876,9 @@ const styles = {
   },
   cancelButton: {
     padding: '9px 18px',
-    border: '1px solid #cbd5e1',
-    backgroundColor: '#ffffff',
-    color: '#475569',
+    border: '1px solid var(--border-input)',
+    backgroundColor: 'var(--bg-surface)',
+    color: 'var(--text-body)',
     borderRadius: '8px',
     fontSize: '14px',
     fontWeight: '500',
@@ -888,8 +888,8 @@ const styles = {
   saveButton: {
     padding: '9px 18px',
     border: 'none',
-    backgroundColor: '#2563eb',
-    color: '#ffffff',
+    backgroundColor: 'var(--color-primary)',
+    color: 'var(--bg-surface)',
     borderRadius: '8px',
     fontSize: '14px',
     fontWeight: '500',

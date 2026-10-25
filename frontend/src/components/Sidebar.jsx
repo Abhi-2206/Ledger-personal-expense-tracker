@@ -1,6 +1,9 @@
 import React from 'react';
+import { useTheme } from '../ThemeContext.jsx';
 
 function Sidebar({ activePage, onPageChange }) {
+  const { theme, toggleTheme } = useTheme();
+
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: '📊' },
     { id: 'transactions', label: 'Transactions', icon: '💳' },
@@ -39,6 +42,16 @@ function Sidebar({ activePage, onPageChange }) {
           );
         })}
       </nav>
+      <div style={styles.themeToggleContainer}>
+        <button
+          onClick={toggleTheme}
+          style={styles.themeToggle}
+          aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+        >
+          <span style={styles.themeIcon}>{theme === 'light' ? '🌙' : '☀️'}</span>
+          <span style={styles.themeLabel}>{theme === 'light' ? 'Dark' : 'Light'}</span>
+        </button>
+      </div>
     </aside>
   );
 }
@@ -48,14 +61,14 @@ const styles = {
     width: '240px',
     height: '100vh',
     flexShrink: 0,
-    backgroundColor: '#1e293b',
+    backgroundColor: 'var(--bg-sidebar)',
     display: 'flex',
     flexDirection: 'column',
-    borderRight: '1px solid #334155',
+    borderRight: '1px solid var(--border-subtle)',
   },
   logo: {
     padding: '24px 20px 20px',
-    borderBottom: '1px solid #334155',
+    borderBottom: '1px solid var(--border-subtle)',
   },
   brandRow: {
     display: 'flex',
@@ -67,14 +80,14 @@ const styles = {
     lineHeight: 1,
   },
   logoText: {
-    color: '#f8fafc',
+    color: 'var(--text-primary)',
     fontSize: '20px',
     fontWeight: '700',
     letterSpacing: '-0.4px',
     margin: 0,
   },
   brandSubtitle: {
-    color: '#64748b',
+    color: 'var(--text-muted)',
     fontSize: '11px',
     fontWeight: '600',
     textTransform: 'uppercase',
@@ -86,6 +99,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     gap: '4px',
+    flex: 1,
   },
   navItem: {
     display: 'flex',
@@ -94,7 +108,7 @@ const styles = {
     padding: '10px 14px',
     border: 'none',
     backgroundColor: 'transparent',
-    color: '#94a3b8',
+    color: 'var(--text-muted)',
     fontSize: '14px',
     fontWeight: '500',
     cursor: 'pointer',
@@ -104,7 +118,7 @@ const styles = {
     width: '100%',
   },
   navItemActive: {
-    backgroundColor: '#2563eb',
+    backgroundColor: 'var(--color-primary)',
     color: '#ffffff',
     fontWeight: '600',
     boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.15)',
@@ -117,6 +131,35 @@ const styles = {
     width: '20px',
   },
   label: {
+    flex: 1,
+    textAlign: 'left',
+  },
+  themeToggleContainer: {
+    padding: '16px 12px',
+    borderTop: '1px solid var(--border-subtle)',
+  },
+  themeToggle: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+    padding: '10px 14px',
+    border: '1px solid var(--border-subtle)',
+    backgroundColor: 'var(--bg-subtle)',
+    color: 'var(--text-body)',
+    fontSize: '14px',
+    fontWeight: '500',
+    cursor: 'pointer',
+    borderRadius: '8px',
+    transition: 'all 0.15s ease',
+    width: '100%',
+  },
+  themeIcon: {
+    fontSize: '18px',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  themeLabel: {
     flex: 1,
     textAlign: 'left',
   },

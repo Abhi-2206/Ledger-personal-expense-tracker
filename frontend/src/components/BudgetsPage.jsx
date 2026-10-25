@@ -413,7 +413,7 @@ const styles = {
   addButton: {
     padding: '9px 18px',
     border: 'none',
-    backgroundColor: '#2563eb',
+    backgroundColor: 'var(--color-primary)',
     color: '#ffffff',
     borderRadius: '8px',
     fontSize: '14px',
@@ -423,18 +423,18 @@ const styles = {
   },
   placeholderText: {
     fontSize: '15px',
-    color: '#64748b',
+    color: 'var(--text-muted)',
     padding: '32px 0',
   },
 
   // Empty state
   emptyState: {
-    backgroundColor: '#ffffff',
+    backgroundColor: 'var(--bg-surface)',
     borderRadius: '12px',
     padding: '48px 24px',
     textAlign: 'center',
-    boxShadow: '0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.04)',
-    border: '1px solid #e2e8f0',
+    boxShadow: 'var(--shadow-card)',
+    border: '1px solid var(--border-subtle)',
   },
   emptyIcon: {
     fontSize: '44px',
@@ -443,12 +443,12 @@ const styles = {
   emptyTitle: {
     fontSize: '18px',
     fontWeight: '600',
-    color: '#0f172a',
+    color: 'var(--text-primary)',
     margin: '0 0 8px 0',
   },
   emptySubtitle: {
     fontSize: '14px',
-    color: '#64748b',
+    color: 'var(--text-muted)',
     margin: '0 0 20px 0',
     maxWidth: '380px',
     marginLeft: 'auto',
@@ -464,11 +464,11 @@ const styles = {
 
   // Budget card
   budgetCard: {
-    backgroundColor: '#ffffff',
+    backgroundColor: 'var(--bg-surface)',
     borderRadius: '12px',
     padding: '20px 24px',
-    boxShadow: '0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.04)',
-    border: '1px solid #e2e8f0',
+    boxShadow: 'var(--shadow-card)',
+    border: '1px solid var(--border-subtle)',
   },
   cardHeader: {
     display: 'flex',
@@ -477,8 +477,8 @@ const styles = {
     marginBottom: '16px',
   },
   categoryPill: {
-    backgroundColor: '#f1f5f9',
-    color: '#475569',
+    backgroundColor: 'var(--bg-subtle)',
+    color: 'var(--text-body)',
     padding: '3px 10px',
     borderRadius: '6px',
     fontSize: '13px',
@@ -498,9 +498,9 @@ const styles = {
   },
   editButton: {
     padding: '5px 12px',
-    border: '1px solid #cbd5e1',
-    backgroundColor: '#ffffff',
-    color: '#475569',
+    border: '1px solid var(--border-input)',
+    backgroundColor: 'var(--bg-surface)',
+    color: 'var(--text-body)',
     borderRadius: '6px',
     fontSize: '13px',
     fontWeight: '500',
@@ -509,9 +509,9 @@ const styles = {
   },
   deleteButton: {
     padding: '5px 12px',
-    border: '1px solid #fecaca',
-    backgroundColor: '#fef2f2',
-    color: '#dc2626',
+    border: '1px solid var(--color-danger-border)',
+    backgroundColor: 'var(--color-danger-light)',
+    color: 'var(--color-danger-hover)',
     borderRadius: '6px',
     fontSize: '13px',
     fontWeight: '500',
@@ -533,7 +533,7 @@ const styles = {
   },
   amountLabel: {
     fontSize: '11px',
-    color: '#64748b',
+    color: 'var(--text-muted)',
     fontWeight: '600',
     textTransform: 'uppercase',
     letterSpacing: '0.5px',
@@ -541,7 +541,7 @@ const styles = {
   amountValue: {
     fontSize: '20px',
     fontWeight: '700',
-    color: '#0f172a',
+    color: 'var(--text-primary)',
     letterSpacing: '-0.3px',
     fontVariantNumeric: 'tabular-nums',
   },
@@ -549,7 +549,7 @@ const styles = {
   // Progress bar
   progressTrack: {
     height: '8px',
-    backgroundColor: '#f1f5f9',
+    backgroundColor: 'var(--bg-subtle)',
     borderRadius: '4px',
     overflow: 'hidden',
     marginBottom: '6px',
@@ -566,30 +566,30 @@ const styles = {
   },
   progressPct: {
     fontSize: '12px',
-    color: '#64748b',
+    color: 'var(--text-muted)',
     fontVariantNumeric: 'tabular-nums',
   },
   overBudgetNote: {
     fontSize: '12px',
-    color: '#ef4444',
+    color: 'var(--color-danger)',
     fontWeight: '600',
     fontVariantNumeric: 'tabular-nums',
   },
 
   // Form card
   formCard: {
-    backgroundColor: '#ffffff',
+    backgroundColor: 'var(--bg-surface)',
     borderRadius: '12px',
     padding: '24px',
-    boxShadow: '0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.04)',
-    border: '1px solid #e2e8f0',
+    boxShadow: 'var(--shadow-card)',
+    border: '1px solid var(--border-subtle)',
     marginBottom: '24px',
   },
   formTitle: {
     margin: '0 0 18px 0',
     fontSize: '17px',
     fontWeight: '600',
-    color: '#0f172a',
+    color: 'var(--text-primary)',
   },
   form: {
     display: 'flex',
@@ -610,39 +610,39 @@ const styles = {
   formLabel: {
     fontSize: '13px',
     fontWeight: '500',
-    color: '#475569',
+    color: 'var(--text-body)',
   },
   select: {
     padding: '8px 12px',
-    border: '1px solid #cbd5e1',
+    border: '1px solid var(--border-input)',
     borderRadius: '8px',
     fontSize: '14px',
     outline: 'none',
-    backgroundColor: '#ffffff',
-    color: '#0f172a',
+    backgroundColor: 'var(--bg-surface)',
+    color: 'var(--text-primary)',
     height: '38px',
     boxSizing: 'border-box',
   },
   input: {
     padding: '8px 12px',
-    border: '1px solid #cbd5e1',
+    border: '1px solid var(--border-input)',
     borderRadius: '8px',
     fontSize: '14px',
     outline: 'none',
-    color: '#0f172a',
+    color: 'var(--text-primary)',
     height: '38px',
     boxSizing: 'border-box',
   },
   inputError: {
-    borderColor: '#ef4444',
+    borderColor: 'var(--color-danger)',
   },
   errorMsg: {
     fontSize: '12px',
-    color: '#ef4444',
+    color: 'var(--color-danger)',
   },
   infoMsg: {
     fontSize: '12px',
-    color: '#94a3b8',
+    color: 'var(--text-subtle)',
   },
   formButtons: {
     display: 'flex',
@@ -651,9 +651,9 @@ const styles = {
   },
   cancelButton: {
     padding: '9px 18px',
-    border: '1px solid #cbd5e1',
-    backgroundColor: '#ffffff',
-    color: '#475569',
+    border: '1px solid var(--border-input)',
+    backgroundColor: 'var(--bg-surface)',
+    color: 'var(--text-body)',
     borderRadius: '8px',
     fontSize: '14px',
     fontWeight: '500',
@@ -663,7 +663,7 @@ const styles = {
   saveButton: {
     padding: '9px 18px',
     border: 'none',
-    backgroundColor: '#2563eb',
+    backgroundColor: 'var(--color-primary)',
     color: '#ffffff',
     borderRadius: '8px',
     fontSize: '14px',
@@ -674,14 +674,14 @@ const styles = {
 
   // Error banner
   errorBanner: {
-    backgroundColor: '#fef2f2',
-    border: '1px solid #fecaca',
-    color: '#dc2626',
+    backgroundColor: 'var(--color-danger-light)',
+    border: '1px solid var(--color-danger-border)',
+    color: 'var(--color-danger-hover)',
     borderRadius: '8px',
     padding: '12px 16px',
     fontSize: '14px',
     marginBottom: '16px',
-    boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.04)',
+    boxShadow: 'var(--shadow-xs)',
   },
 };
 
