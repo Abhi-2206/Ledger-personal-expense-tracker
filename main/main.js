@@ -1,6 +1,7 @@
 const path = require('path');
 const transactionManager = require('./transactionManager');
 const budgetManager = require('./budgetManager');
+const goalsManager = require('./goalsManager');
 const csvExporter = require('./csvExporter');
 
 // Electron exposes its APIs when running in the main process
@@ -42,6 +43,7 @@ app.whenReady().then(() => {
     const userDataPath = app.getPath('userData');
     transactionManager.initialize(userDataPath);
     budgetManager.initialize(userDataPath);
+    goalsManager.initialize(userDataPath);
   } catch (initErr) {
     console.error('Error initializing data managers:', initErr.message);
   }
@@ -150,6 +152,68 @@ app.whenReady().then(() => {
       return Boolean(budgetManager.deleteBudget(id));
     } catch (error) {
       console.error('Error in delete-budget IPC handler:', error.message);
+      return false;
+    }
+  });
+
+  // IPC handlers for savings goal operations
+  ipcMain.handle('get-goals', () => {
+    try {
+      const goals = goalsManager.getAllGoals();
+      return Array.isArray(goals) ? goals : [];
+    } catch (error) {
+      console.error('Error in get-goals IPC handler:', error.message);
+      return [];
+    }
+  });
+
+  ipcMain.handle('add-goal', (event, goalData) => {
+    if (!goalData || typeof goalData !== 'object' || Array.isArray(goalData)) {
+      return { success: false, error: 'Invalid goal data.' };
+    }
+    try {
+      return goalsManager.addGoal(goalData);
+    } catch (error) {
+      console.error('Error in add-goal IPC handler:', error.message);
+      return { success: false, error: 'Failed to add goal.' };
+    }
+  });
+
+  ipcMain.handle('update-goal', (event, id, goalData) => {
+    if (id === undefined || id === null) {
+      return { success: false, error: 'Goal ID is required.' };
+    }
+    if (!goalData || typeof goalData !== 'object' || Array.isArray(goalData)) {
+      return { success: false, error: 'Invalid goal data.' };
+    }
+    try {
+      return goalsManager.updateGoal(id, goalData);
+    } catch (error) {
+      console.error('Error in update-goal IPC handler:', error.message);
+      return { success: false, error: 'Failed to update goal.' };
+    }
+  });
+
+  ipcMain.handle('add-goal-contribution', (event, id, amount) => {
+    if (id === undefined || id === null) {
+      return { success: false, error: 'Goal ID is required.' };
+    }
+    try {
+      return goalsManager.addContribution(id, amount);
+    } catch (error) {
+      console.error('Error in add-goal-contribution IPC handler:', error.message);
+      return { success: false, error: 'Failed to record contribution.' };
+    }
+  });
+
+  ipcMain.handle('delete-goal', (event, id) => {
+    if (id === undefined || id === null) {
+      return false;
+    }
+    try {
+      return Boolean(goalsManager.deleteGoal(id));
+    } catch (error) {
+      console.error('Error in delete-goal IPC handler:', error.message);
       return false;
     }
   });

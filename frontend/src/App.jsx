@@ -4,6 +4,7 @@ import SummaryCards from './components/SummaryCards';
 import TransactionsTable from './components/TransactionsTable';
 import TransactionForm from './components/TransactionForm';
 import BudgetsPage from './components/BudgetsPage';
+import SavingsGoalsPage from './components/SavingsGoalsPage';
 import ReportsPage from './components/ReportsPage';
 import './App.css';
 
@@ -147,6 +148,12 @@ function App() {
           <div style={styles.content}>
             <h1 style={styles.pageTitle}>Budgets</h1>
             <BudgetsPage transactions={transactions} />
+          </div>
+        )}
+        {activePage === 'savings-goals' && (
+          <div style={styles.content}>
+            <h1 style={styles.pageTitle}>Savings Goals</h1>
+            <SavingsGoalsPage />
           </div>
         )}
         {activePage === 'reports' && (

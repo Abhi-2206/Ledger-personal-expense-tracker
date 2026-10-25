@@ -73,4 +73,43 @@ contextBridge.exposeInMainWorld('electronAPI', {
    * @returns {Promise<{ success: boolean, canceled: boolean, filePath?: string, filename?: string, count?: number, error?: string }>}
    */
   exportTransactionsCSV: (transactions) => ipcRenderer.invoke('export-transactions-csv', transactions),
+
+  // ─── Savings Goals ───────────────────────────────────────────────────────────
+
+  /**
+   * Fetch all saved savings goals.
+   * @returns {Promise<Array<object>>}
+   */
+  getGoals: () => ipcRenderer.invoke('get-goals'),
+
+  /**
+   * Create a new savings goal.
+   * @param {{ name: string, targetAmount: number, targetDate?: string }} goalData
+   * @returns {Promise<{ success: boolean, goal?: object, error?: string }>}
+   */
+  addGoal: (goalData) => ipcRenderer.invoke('add-goal', goalData),
+
+  /**
+   * Update an existing goal's name, targetAmount, or targetDate.
+   * Preserves currentAmount (contributions).
+   * @param {number|string} id
+   * @param {{ name?: string, targetAmount?: number, targetDate?: string }} goalData
+   * @returns {Promise<{ success: boolean, goal?: object, error?: string }>}
+   */
+  updateGoal: (id, goalData) => ipcRenderer.invoke('update-goal', id, goalData),
+
+  /**
+   * Add a contribution amount to a goal's currentAmount.
+   * @param {number|string} id
+   * @param {number} amount
+   * @returns {Promise<{ success: boolean, goal?: object, error?: string }>}
+   */
+  addGoalContribution: (id, amount) => ipcRenderer.invoke('add-goal-contribution', id, amount),
+
+  /**
+   * Delete a savings goal by ID.
+   * @param {number|string} id
+   * @returns {Promise<boolean>}
+   */
+  deleteGoal: (id) => ipcRenderer.invoke('delete-goal', id),
 });
