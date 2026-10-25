@@ -33,7 +33,10 @@ function createWindow() {
     win.loadURL('http://localhost:5173');
   } else {
     // In production, load from built files
-    win.loadFile(path.join(__dirname, '../frontend/dist/index.html'));
+    // __dirname resolves correctly within ASAR
+    const indexPath = path.join(__dirname, '../frontend/dist/index.html');
+    console.log('Loading production index.html from:', indexPath);
+    win.loadFile(indexPath);
   }
 }
 
@@ -41,6 +44,7 @@ app.whenReady().then(() => {
   // Initialize managers with user data path
   try {
     const userDataPath = app.getPath('userData');
+    console.log('User data path:', userDataPath);
     transactionManager.initialize(userDataPath);
     budgetManager.initialize(userDataPath);
     goalsManager.initialize(userDataPath);
@@ -50,6 +54,18 @@ app.whenReady().then(() => {
   }
 
   createWindow();
+
+  app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+      app.quit();
+    }
+  });
+
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createWindow();
+    }
+  });
 
   // IPC handlers for transaction operations
   ipcMain.handle('get-transactions', () => {
