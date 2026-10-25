@@ -188,7 +188,6 @@ async function exportTransactionsCSV(transactions = [], options = {}) {
     return {
       success: false,
       canceled: false,
-      filePath,
       error: 'Failed to write CSV file to destination.',
     };
   }
