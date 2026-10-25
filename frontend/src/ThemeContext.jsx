@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
 const ThemeContext = createContext(null);
 
@@ -29,18 +29,21 @@ export function ThemeProvider({ children }) {
     setIsInitialized(true);
   }, []);
 
-  // Update theme and persist to localStorage
-  const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-    document.documentElement.setAttribute('data-theme', newTheme);
-    
-    try {
-      localStorage.setItem(THEME_STORAGE_KEY, newTheme);
-    } catch (error) {
-      console.error('Error saving theme to localStorage:', error);
-    }
-  };
+  // Update theme and persist to localStorage - use useCallback to avoid stale closures
+  const toggleTheme = useCallback(() => {
+    setTheme((prevTheme) => {
+      const newTheme = prevTheme === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      
+      try {
+        localStorage.setItem(THEME_STORAGE_KEY, newTheme);
+      } catch (error) {
+        console.error('Error saving theme to localStorage:', error);
+      }
+      
+      return newTheme;
+    });
+  }, []);
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme, isInitialized }}>

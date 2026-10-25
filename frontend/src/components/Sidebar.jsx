@@ -118,8 +118,8 @@ const styles = {
     width: '100%',
   },
   navItemActive: {
-    backgroundColor: 'var(--color-primary)',
-    color: '#ffffff',
+    backgroundColor: 'var(--color-primary) !important',
+    color: '#ffffff !important',
     fontWeight: '600',
     boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.15)',
   },

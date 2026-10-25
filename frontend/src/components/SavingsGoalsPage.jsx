@@ -42,7 +42,7 @@ function GoalRow({ goal, onEdit, onDelete, onAddContribution }) {
     <div className="interactive-card" style={styles.goalCard}>
       <div style={styles.cardHeader}>
         <div style={styles.goalName}>{goal.name}</div>
-        <div style={{ ...styles.statusBadge, backgroundColor: isComplete ? '#ecfdf5' : '#eff6ff', color: statusColor }}>
+        <div style={{ ...styles.statusBadge, backgroundColor: isComplete ? 'var(--color-success-light)' : 'var(--color-primary-light)', color: statusColor }}>
           {statusLabel}
         </div>
         <div style={styles.cardActions}>
@@ -645,9 +645,9 @@ const styles = {
   },
   deleteButton: {
     padding: '5px 12px',
-    border: '1px solid #fecaca',
-    backgroundColor: '#fef2f2',
-    color: '#dc2626',
+    border: '1px solid var(--color-danger-border)',
+    backgroundColor: 'var(--color-danger-light)',
+    color: 'var(--color-danger-hover)',
     borderRadius: '6px',
     fontSize: '13px',
     fontWeight: '500',
@@ -685,7 +685,7 @@ const styles = {
   // Progress bar
   progressTrack: {
     height: '8px',
-    backgroundColor: '#f1f5f9',
+    backgroundColor: 'var(--bg-subtle)',
     borderRadius: '4px',
     overflow: 'hidden',
     marginBottom: '6px',
@@ -815,26 +815,26 @@ const styles = {
 
   // Success banner
   successBanner: {
-    backgroundColor: '#ecfdf5',
-    border: '1px solid #a7f3d0',
-    color: '#059669',
+    backgroundColor: 'var(--color-success-light)',
+    border: '1px solid var(--color-success-border)',
+    color: 'var(--color-success-hover)',
     borderRadius: '8px',
     padding: '12px 16px',
     fontSize: '14px',
     marginBottom: '16px',
-    boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.04)',
+    boxShadow: 'var(--shadow-xs)',
   },
 
   // Error banner
   errorBanner: {
-    backgroundColor: '#fef2f2',
-    border: '1px solid #fecaca',
-    color: '#dc2626',
+    backgroundColor: 'var(--color-danger-light)',
+    border: '1px solid var(--color-danger-border)',
+    color: 'var(--color-danger-hover)',
     borderRadius: '8px',
     padding: '12px 16px',
     fontSize: '14px',
     marginBottom: '16px',
-    boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.04)',
+    boxShadow: 'var(--shadow-xs)',
   },
 };
 

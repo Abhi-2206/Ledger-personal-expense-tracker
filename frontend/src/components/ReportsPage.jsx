@@ -350,7 +350,7 @@ const styles = {
     letterSpacing: '-0.3px',
   },
   totalChip: {
-    backgroundColor: '#f1f5f9',
+    backgroundColor: 'var(--bg-subtle)',
     color: 'var(--text-body)',
     padding: '3px 10px',
     borderRadius: '6px',
@@ -400,7 +400,7 @@ const styles = {
   },
   barTrack: {
     height: '8px',
-    backgroundColor: '#f1f5f9',
+    backgroundColor: 'var(--bg-subtle)',
     borderRadius: '4px',
     overflow: 'hidden',
   },

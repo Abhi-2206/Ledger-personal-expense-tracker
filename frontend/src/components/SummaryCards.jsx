@@ -39,22 +39,22 @@ function SummaryCards({ transactions = [] }) {
         ? `-$${Math.abs(summary.numericBalance).toFixed(2)}`
         : `$${summary.balance}`,
       icon: '💳',
-      color: isNegativeBalance ? '#ef4444' : '#2563eb',
-      bgColor: isNegativeBalance ? '#fef2f2' : '#eff6ff',
+      color: isNegativeBalance ? 'var(--color-danger)' : 'var(--color-primary)',
+      bgColor: isNegativeBalance ? 'var(--color-danger-light)' : 'var(--color-primary-light)',
     },
     {
       title: 'Income',
       value: `$${summary.income}`,
       icon: '📈',
-      color: '#10b981',
-      bgColor: '#ecfdf5',
+      color: 'var(--color-success)',
+      bgColor: 'var(--color-success-light)',
     },
     {
       title: 'Expenses',
       value: `$${summary.expenses}`,
       icon: '📉',
-      color: '#ef4444',
-      bgColor: '#fef2f2',
+      color: 'var(--color-danger)',
+      bgColor: 'var(--color-danger-light)',
     },
   ];
 

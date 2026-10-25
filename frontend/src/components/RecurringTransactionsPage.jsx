@@ -47,10 +47,10 @@ function RuleRow({ rule, onEdit, onToggleStatus, onDelete }) {
     <div className="interactive-card" style={styles.ruleCard}>
       <div style={styles.cardHeader}>
         <div style={styles.ruleTitle}>{rule.title}</div>
-        <div style={{ ...styles.typeBadge, backgroundColor: isIncome ? '#ecfdf5' : '#fef2f2', color: isIncome ? '#059669' : '#dc2626' }}>
+        <div style={{ ...styles.typeBadge, backgroundColor: isIncome ? 'var(--color-success-light)' : 'var(--color-danger-light)', color: isIncome ? 'var(--color-success)' : 'var(--color-danger)' }}>
           {isIncome ? 'Income' : 'Expense'}
         </div>
-        <div style={{ ...styles.statusBadge, backgroundColor: rule.active ? '#eff6ff' : '#f1f5f9', color: rule.active ? 'var(--color-primary)' : 'var(--text-muted)' }}>
+        <div style={{ ...styles.statusBadge, backgroundColor: rule.active ? 'var(--color-primary-light)' : 'var(--bg-subtle)', color: rule.active ? 'var(--color-primary)' : 'var(--text-muted)' }}>
           {rule.active ? 'Active' : 'Paused'}
         </div>
         <div style={styles.cardActions}>
@@ -84,7 +84,7 @@ function RuleRow({ rule, onEdit, onToggleStatus, onDelete }) {
       <div style={styles.detailsRow}>
         <div style={styles.detailItem}>
           <span style={styles.detailLabel}>Amount</span>
-          <span style={{ ...styles.detailValue, color: isIncome ? '#059669' : '#dc2626' }}>
+          <span style={{ ...styles.detailValue, color: isIncome ? '#059669' : 'var(--color-danger-hover)' }}>
             {formatCurrency(signedAmount)}
           </span>
         </div>
@@ -111,7 +111,7 @@ function RuleRow({ rule, onEdit, onToggleStatus, onDelete }) {
         )}
         <div style={styles.dateItem}>
           <span style={styles.dateLabel}>Next Due:</span>
-          <span style={{ ...styles.dateValue, color: isOverdue ? '#dc2626' : isDueSoon ? '#f59e0b' : 'var(--text-body)', fontWeight: isOverdue || isDueSoon ? '600' : '500' }}>
+          <span style={{ ...styles.dateValue, color: isOverdue ? 'var(--color-danger-hover)' : isDueSoon ? '#f59e0b' : 'var(--text-body)', fontWeight: isOverdue || isDueSoon ? '600' : '500' }}>
             {formatDate(rule.nextDueDate)}
             {isOverdue && ' (Overdue)'}
             {isDueSoon && !isOverdue && ' (Due Soon)'}
@@ -745,9 +745,9 @@ const styles = {
   },
   deleteButton: {
     padding: '5px 12px',
-    border: '1px solid #fecaca',
-    backgroundColor: '#fef2f2',
-    color: '#dc2626',
+    border: '1px solid var(--color-danger-border)',
+    backgroundColor: 'var(--color-danger-light)',
+    color: 'var(--color-danger-hover)',
     borderRadius: '6px',
     fontSize: '13px',
     fontWeight: '500',
@@ -899,26 +899,26 @@ const styles = {
 
   // Success banner
   successBanner: {
-    backgroundColor: '#ecfdf5',
-    border: '1px solid #a7f3d0',
-    color: '#059669',
+    backgroundColor: 'var(--color-success-light)',
+    border: '1px solid var(--color-success-border)',
+    color: 'var(--color-success-hover)',
     borderRadius: '8px',
     padding: '12px 16px',
     fontSize: '14px',
     marginBottom: '16px',
-    boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.04)',
+    boxShadow: 'var(--shadow-xs)',
   },
 
   // Result banner
   resultBanner: {
-    backgroundColor: '#eff6ff',
-    border: '1px solid #bfdbfe',
-    color: '#1e40af',
+    backgroundColor: 'var(--color-primary-light)',
+    border: '1px solid var(--color-primary-border)',
+    color: 'var(--color-primary-hover)',
     borderRadius: '8px',
     padding: '12px 16px',
     fontSize: '14px',
     marginBottom: '16px',
-    boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.04)',
+    boxShadow: 'var(--shadow-xs)',
   },
   resultList: {
     margin: '8px 0 0 0',
@@ -927,14 +927,14 @@ const styles = {
 
   // Error banner
   errorBanner: {
-    backgroundColor: '#fef2f2',
-    border: '1px solid #fecaca',
-    color: '#dc2626',
+    backgroundColor: 'var(--color-danger-light)',
+    border: '1px solid var(--color-danger-border)',
+    color: 'var(--color-danger-hover)',
     borderRadius: '8px',
     padding: '12px 16px',
     fontSize: '14px',
     marginBottom: '16px',
-    boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.04)',
+    boxShadow: 'var(--shadow-xs)',
   },
 };
 
