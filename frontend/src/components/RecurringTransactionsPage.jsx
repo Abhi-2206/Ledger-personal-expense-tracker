@@ -84,7 +84,7 @@ function RuleRow({ rule, onEdit, onToggleStatus, onDelete }) {
       <div style={styles.detailsRow}>
         <div style={styles.detailItem}>
           <span style={styles.detailLabel}>Amount</span>
-          <span style={{ ...styles.detailValue, color: isIncome ? '#059669' : 'var(--color-danger-hover)' }}>
+          <span style={{ ...styles.detailValue, color: isIncome ? 'var(--color-success)' : 'var(--color-danger)' }}>
             {formatCurrency(signedAmount)}
           </span>
         </div>
@@ -111,7 +111,7 @@ function RuleRow({ rule, onEdit, onToggleStatus, onDelete }) {
         )}
         <div style={styles.dateItem}>
           <span style={styles.dateLabel}>Next Due:</span>
-          <span style={{ ...styles.dateValue, color: isOverdue ? 'var(--color-danger-hover)' : isDueSoon ? '#f59e0b' : 'var(--text-body)', fontWeight: isOverdue || isDueSoon ? '600' : '500' }}>
+          <span style={{ ...styles.dateValue, color: isOverdue ? 'var(--color-danger)' : isDueSoon ? 'var(--color-warning)' : 'var(--text-body)', fontWeight: isOverdue || isDueSoon ? '600' : '500' }}>
             {formatDate(rule.nextDueDate)}
             {isOverdue && ' (Overdue)'}
             {isDueSoon && !isOverdue && ' (Due Soon)'}
@@ -786,7 +786,7 @@ const styles = {
     display: 'flex',
     gap: '24px',
     paddingTop: '12px',
-    borderTop: '1px solid #f1f5f9',
+    borderTop: '1px solid var(--border-subtle)',
     flexWrap: 'wrap',
   },
   dateItem: {
@@ -901,7 +901,7 @@ const styles = {
   successBanner: {
     backgroundColor: 'var(--color-success-light)',
     border: '1px solid var(--color-success-border)',
-    color: 'var(--color-success-hover)',
+    color: 'var(--color-success)',
     borderRadius: '8px',
     padding: '12px 16px',
     fontSize: '14px',
@@ -913,7 +913,7 @@ const styles = {
   resultBanner: {
     backgroundColor: 'var(--color-primary-light)',
     border: '1px solid var(--color-primary-border)',
-    color: 'var(--color-primary-hover)',
+    color: 'var(--color-primary)',
     borderRadius: '8px',
     padding: '12px 16px',
     fontSize: '14px',
@@ -929,7 +929,7 @@ const styles = {
   errorBanner: {
     backgroundColor: 'var(--color-danger-light)',
     border: '1px solid var(--color-danger-border)',
-    color: 'var(--color-danger-hover)',
+    color: 'var(--color-danger)',
     borderRadius: '8px',
     padding: '12px 16px',
     fontSize: '14px',

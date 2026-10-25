@@ -187,21 +187,21 @@ function ReportsPage({ transactions }) {
           value={`$${summary.income}`}
           icon="📈"
           color="var(--color-success)"
-          bgColor="#ecfdf5"
+          bgColor="var(--color-success-light)"
         />
         <SummaryCard
           title="Monthly Expenses"
           value={`$${summary.expenses}`}
           icon="📉"
           color="var(--color-danger)"
-          bgColor="#fef2f2"
+          bgColor="var(--color-danger-light)"
         />
         <SummaryCard
           title="Net Balance"
           value={netFormatted}
           icon="💳"
-          color={netIsNegative ? 'var(--color-danger)' : '#3b82f6'}
-          bgColor={netIsNegative ? '#fef2f2' : '#eff6ff'}
+          color={netIsNegative ? 'var(--color-danger)' : 'var(--color-primary)'}
+          bgColor={netIsNegative ? 'var(--color-danger-light)' : 'var(--color-primary-light)'}
         />
       </div>
 

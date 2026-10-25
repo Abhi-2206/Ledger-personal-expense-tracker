@@ -21,9 +21,9 @@ function getBudgetStatus(spent, budgeted) {
 }
 
 const STATUS_CONFIG = {
-  exceeded: { color: '#ef4444', bgColor: '#fef2f2', label: 'Exceeded', barColor: '#ef4444' },
-  warning:  { color: '#f59e0b', bgColor: '#fffbeb', label: 'Approaching', barColor: '#f59e0b' },
-  ok:       { color: '#10b981', bgColor: '#ecfdf5', label: 'On track',   barColor: '#10b981' },
+  exceeded: { color: 'var(--color-danger)', bgColor: 'var(--color-danger-light)', label: 'Exceeded', barColor: 'var(--color-danger)' },
+  warning:  { color: 'var(--color-warning)', bgColor: 'var(--color-warning-light)', label: 'Approaching', barColor: 'var(--color-warning)' },
+  ok:       { color: 'var(--color-success)', bgColor: 'var(--color-success-light)', label: 'On track',   barColor: 'var(--color-success)' },
 };
 
 // ─── BudgetRow ─────────────────────────────────────────────────────────────────
@@ -69,13 +69,13 @@ function BudgetRow({ budget, transactions, year, month, onEdit, onDelete }) {
         </div>
         <div style={styles.amountItem}>
           <span style={styles.amountLabel}>Spent</span>
-          <span style={{ ...styles.amountValue, color: spent > 0 ? '#ef4444' : '#64748b' }}>
+          <span style={{ ...styles.amountValue, color: spent > 0 ? 'var(--color-danger)' : 'var(--text-muted)' }}>
             {formatCurrency(spent)}
           </span>
         </div>
         <div style={styles.amountItem}>
           <span style={styles.amountLabel}>Remaining</span>
-          <span style={{ ...styles.amountValue, color: remaining < 0 ? '#ef4444' : '#10b981' }}>
+          <span style={{ ...styles.amountValue, color: remaining < 0 ? 'var(--color-danger)' : 'var(--color-success)' }}>
             {remaining < 0 ? `-${formatCurrency(Math.abs(remaining))}` : formatCurrency(remaining)}
           </span>
         </div>
@@ -407,14 +407,14 @@ const styles = {
   monthLabel: {
     margin: 0,
     fontSize: '14px',
-    color: '#64748b',
+    color: 'var(--text-muted)',
     fontWeight: '500',
   },
   addButton: {
     padding: '9px 18px',
     border: 'none',
     backgroundColor: 'var(--color-primary)',
-    color: '#ffffff',
+    color: 'var(--bg-surface)',
     borderRadius: '8px',
     fontSize: '14px',
     fontWeight: '500',
@@ -664,7 +664,7 @@ const styles = {
     padding: '9px 18px',
     border: 'none',
     backgroundColor: 'var(--color-primary)',
-    color: '#ffffff',
+    color: 'var(--bg-surface)',
     borderRadius: '8px',
     fontSize: '14px',
     fontWeight: '500',

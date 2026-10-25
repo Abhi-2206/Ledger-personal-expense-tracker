@@ -35,7 +35,7 @@ function GoalRow({ goal, onEdit, onDelete, onAddContribution }) {
   const isComplete = currentAmount >= targetAmount;
   const isOverfunded = currentAmount > targetAmount;
 
-  const statusColor = isOverfunded ? '#8b5cf6' : isComplete ? 'var(--color-success)' : '#3b82f6';
+  const statusColor = isOverfunded ? 'var(--color-primary)' : isComplete ? 'var(--color-success)' : 'var(--color-primary)';
   const statusLabel = isOverfunded ? 'Overfunded' : isComplete ? 'Completed' : 'In Progress';
 
   return (
@@ -707,7 +707,7 @@ const styles = {
   },
   overfundedNote: {
     fontSize: '12px',
-    color: '#8b5cf6',
+    color: 'var(--color-primary)',
     fontWeight: '600',
     fontVariantNumeric: 'tabular-nums',
   },
@@ -716,7 +716,7 @@ const styles = {
   targetDateRow: {
     marginTop: '12px',
     paddingTop: '12px',
-    borderTop: '1px solid #f1f5f9',
+    borderTop: '1px solid var(--border-subtle)',
     display: 'flex',
     gap: '8px',
     alignItems: 'center',
@@ -817,7 +817,7 @@ const styles = {
   successBanner: {
     backgroundColor: 'var(--color-success-light)',
     border: '1px solid var(--color-success-border)',
-    color: 'var(--color-success-hover)',
+    color: 'var(--color-success)',
     borderRadius: '8px',
     padding: '12px 16px',
     fontSize: '14px',
@@ -829,7 +829,7 @@ const styles = {
   errorBanner: {
     backgroundColor: 'var(--color-danger-light)',
     border: '1px solid var(--color-danger-border)',
-    color: 'var(--color-danger-hover)',
+    color: 'var(--color-danger)',
     borderRadius: '8px',
     padding: '12px 16px',
     fontSize: '14px',

@@ -299,7 +299,7 @@ const styles = {
     alignItems: 'center',
     gap: '8px',
     fontSize: '14px',
-    color: '#334155',
+    color: 'var(--text-body)',
     cursor: 'pointer',
   },
   radio: {
