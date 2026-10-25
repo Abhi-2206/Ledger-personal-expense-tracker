@@ -2,6 +2,7 @@ const path = require('path');
 const transactionManager = require('./transactionManager');
 const budgetManager = require('./budgetManager');
 const goalsManager = require('./goalsManager');
+const recurringManager = require('./recurringManager');
 const csvExporter = require('./csvExporter');
 
 // Electron exposes its APIs when running in the main process
@@ -44,6 +45,7 @@ app.whenReady().then(() => {
     transactionManager.initialize(userDataPath);
     budgetManager.initialize(userDataPath);
     goalsManager.initialize(userDataPath);
+    recurringManager.initialize(userDataPath);
   } catch (initErr) {
     console.error('Error initializing data managers:', initErr.message);
   }
@@ -215,6 +217,77 @@ app.whenReady().then(() => {
     } catch (error) {
       console.error('Error in delete-goal IPC handler:', error.message);
       return false;
+    }
+  });
+
+  // IPC handlers for recurring transaction operations
+  ipcMain.handle('get-recurring-rules', () => {
+    try {
+      const rules = recurringManager.getAllRules();
+      return Array.isArray(rules) ? rules : [];
+    } catch (error) {
+      console.error('Error in get-recurring-rules IPC handler:', error.message);
+      return [];
+    }
+  });
+
+  ipcMain.handle('add-recurring-rule', (event, ruleData) => {
+    if (!ruleData || typeof ruleData !== 'object' || Array.isArray(ruleData)) {
+      return { success: false, error: 'Invalid rule data.' };
+    }
+    try {
+      return recurringManager.addRule(ruleData);
+    } catch (error) {
+      console.error('Error in add-recurring-rule IPC handler:', error.message);
+      return { success: false, error: 'Failed to add recurring rule.' };
+    }
+  });
+
+  ipcMain.handle('update-recurring-rule', (event, id, ruleData) => {
+    if (id === undefined || id === null) {
+      return { success: false, error: 'Rule ID is required.' };
+    }
+    if (!ruleData || typeof ruleData !== 'object' || Array.isArray(ruleData)) {
+      return { success: false, error: 'Invalid rule data.' };
+    }
+    try {
+      return recurringManager.updateRule(id, ruleData);
+    } catch (error) {
+      console.error('Error in update-recurring-rule IPC handler:', error.message);
+      return { success: false, error: 'Failed to update recurring rule.' };
+    }
+  });
+
+  ipcMain.handle('toggle-recurring-rule-status', (event, id) => {
+    if (id === undefined || id === null) {
+      return { success: false, error: 'Rule ID is required.' };
+    }
+    try {
+      return recurringManager.toggleRuleStatus(id);
+    } catch (error) {
+      console.error('Error in toggle-recurring-rule-status IPC handler:', error.message);
+      return { success: false, error: 'Failed to toggle rule status.' };
+    }
+  });
+
+  ipcMain.handle('delete-recurring-rule', (event, id) => {
+    if (id === undefined || id === null) {
+      return false;
+    }
+    try {
+      return Boolean(recurringManager.deleteRule(id));
+    } catch (error) {
+      console.error('Error in delete-recurring-rule IPC handler:', error.message);
+      return false;
+    }
+  });
+
+  ipcMain.handle('process-due-transactions', () => {
+    try {
+      return recurringManager.processDueTransactions(transactionManager);
+    } catch (error) {
+      console.error('Error in process-due-transactions IPC handler:', error.message);
+      return { success: false, error: 'Failed to process due transactions.' };
     }
   });
 

@@ -5,6 +5,7 @@ import TransactionsTable from './components/TransactionsTable';
 import TransactionForm from './components/TransactionForm';
 import BudgetsPage from './components/BudgetsPage';
 import SavingsGoalsPage from './components/SavingsGoalsPage';
+import RecurringTransactionsPage from './components/RecurringTransactionsPage';
 import ReportsPage from './components/ReportsPage';
 import './App.css';
 
@@ -154,6 +155,12 @@ function App() {
           <div style={styles.content}>
             <h1 style={styles.pageTitle}>Savings Goals</h1>
             <SavingsGoalsPage />
+          </div>
+        )}
+        {activePage === 'recurring' && (
+          <div style={styles.content}>
+            <h1 style={styles.pageTitle}>Recurring Transactions</h1>
+            <RecurringTransactionsPage onRefreshTransactions={loadTransactions} />
           </div>
         )}
         {activePage === 'reports' && (

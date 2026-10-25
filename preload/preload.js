@@ -112,4 +112,48 @@ contextBridge.exposeInMainWorld('electronAPI', {
    * @returns {Promise<boolean>}
    */
   deleteGoal: (id) => ipcRenderer.invoke('delete-goal', id),
+
+  // ─── Recurring Transactions ─────────────────────────────────────────────────
+
+  /**
+   * Fetch all saved recurring transaction rules.
+   * @returns {Promise<Array<object>>}
+   */
+  getRecurringRules: () => ipcRenderer.invoke('get-recurring-rules'),
+
+  /**
+   * Create a new recurring transaction rule.
+   * @param {{ title: string, amount: number, type: 'income'|'expense', category: string, frequency: 'daily'|'weekly'|'monthly'|'yearly', startDate: string, endDate?: string }} ruleData
+   * @returns {Promise<{ success: boolean, rule?: object, error?: string }>}
+   */
+  addRecurringRule: (ruleData) => ipcRenderer.invoke('add-recurring-rule', ruleData),
+
+  /**
+   * Update an existing recurring rule.
+   * @param {number|string} id
+   * @param {{ title?: string, amount?: number, type?: 'income'|'expense', category?: string, frequency?: 'daily'|'weekly'|'monthly'|'yearly', startDate?: string, endDate?: string }} ruleData
+   * @returns {Promise<{ success: boolean, rule?: object, error?: string }>}
+   */
+  updateRecurringRule: (id, ruleData) => ipcRenderer.invoke('update-recurring-rule', id, ruleData),
+
+  /**
+   * Toggle a rule's active/paused status.
+   * @param {number|string} id
+   * @returns {Promise<{ success: boolean, rule?: object, error?: string }>}
+   */
+  toggleRecurringRuleStatus: (id) => ipcRenderer.invoke('toggle-recurring-rule-status', id),
+
+  /**
+   * Delete a recurring rule by ID.
+   * @param {number|string} id
+   * @returns {Promise<boolean>}
+   */
+  deleteRecurringRule: (id) => ipcRenderer.invoke('delete-recurring-rule', id),
+
+  /**
+   * Process due transactions for all active recurring rules.
+   * Generates normal transactions and advances next due dates.
+   * @returns {Promise<{ success: boolean, processed: number, transactions: Array<object>, error?: string }>}
+   */
+  processDueTransactions: () => ipcRenderer.invoke('process-due-transactions'),
 });

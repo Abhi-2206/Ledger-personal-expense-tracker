@@ -6,6 +6,7 @@ function Sidebar({ activePage, onPageChange }) {
     { id: 'transactions', label: 'Transactions', icon: '💳' },
     { id: 'budgets', label: 'Budgets', icon: '💰' },
     { id: 'savings-goals', label: 'Savings Goals', icon: '🎯' },
+    { id: 'recurring', label: 'Recurring', icon: '🔄' },
     { id: 'reports', label: 'Reports', icon: '📈' },
   ];
 
